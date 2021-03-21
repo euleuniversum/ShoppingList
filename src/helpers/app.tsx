@@ -8,7 +8,7 @@ export type CalcCenteredGridType = {
  * @param {number} sizeBlock - количество колонок, которое должен занимать блок.
  */
 export const calcCenteredGrid = (sizeBlock: number): CalcCenteredGridType => {
-    if(sizeBlock % 2 !== 0) {
+    if (sizeBlock % 2 !== 0) {
         throw new Error('значение размера блока должно быть кратно двум');
     }
     const gridColumns = 24; // Количество колонок в системе grid (https://ant.design/components/grid/)

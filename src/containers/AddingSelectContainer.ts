@@ -1,10 +1,10 @@
 import {connect} from "react-redux";
 import AddingSelect from "../conponents/AddingSelect/AddingSelect";
-import {RootStore} from "../reducers/root/types";
 import {clearArray} from "../helpers/app";
+import {IRootStore} from "../interface";
 
 export default connect(
-    (state: RootStore) => ({
+    (state: IRootStore) => ({
         items: clearArray(state.purchases.map(purchase => purchase.whereBuy))
     })
 )(AddingSelect)

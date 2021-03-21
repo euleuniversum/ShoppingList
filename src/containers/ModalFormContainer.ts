@@ -1,21 +1,23 @@
 import {connect} from "react-redux";
 import ModalForm from "../conponents/ModalForm/ModalForm";
-import {RootStore} from "../reducers/root/types";
 import {addPurchaseAction, changeModalState, editPurchaseAction} from "../actionCreators";
-import {FormValuesType} from "../reducers/purchases/types";
+import {ModalState, IRootStore, IFormValues, IPurchaseItem} from "../interface";
 
-const getModalProps = (state: RootStore) => {
-    const modalState = state.modal.state;
+const getModalProps = (modalState: ModalState, purchaseValues: IPurchaseItem | undefined) => {
+    const defaultModalProps = {
+        visible: false,
+        state: modalState,
+    }
+
     switch (modalState) {
-        case 'create':
+        case ModalState.CREATE:
             return {
                 title: 'Добавить элемент',
                 visible: true,
                 state: modalState,
             }
-        case 'edit': {
-            const purchaseValues = state.purchases.find(purchase => purchase.isEdited);
-            if(purchaseValues) {
+        case ModalState.EDIT: {
+            if (purchaseValues) {
                 return {
                     title: 'Редактировать элемент',
                     visible: true,
@@ -27,41 +29,30 @@ const getModalProps = (state: RootStore) => {
                     },
                     state: modalState,
                 }
-            } else {
-                return {
-                    visible: false,
-                    state: modalState,
-                }
-            }
+            } return defaultModalProps;
         }
-        case "hide":
+        case ModalState.HIDE:
         default:
-            return  {
-                visible: false,
-                state: modalState,
-            }
+            return defaultModalProps;
     }
 };
 
 export default connect(
-    (state: RootStore) => ({state}),
+    (state: IRootStore) => ({state}),
     (dispatch) => ({dispatch}),
     (stateProps, dispatchProps) => {
         const {state} = stateProps;
         const {dispatch} = dispatchProps;
-
+        const modalState = state.modal.modalState;
+        const purchaseValues = state.purchases.find(purchase => purchase.isEdited);
         return {
-            ...getModalProps(state),
-            onClose: () => dispatch(changeModalState('hide')),
-            onSubmit: (values: FormValuesType) => {
-                const modalState = state.modal.state;
-                if(modalState === 'create') {
+            ...getModalProps(modalState, purchaseValues),
+            onClose: () => dispatch(changeModalState(ModalState.HIDE)),
+            onSubmit: (values: IFormValues) => {
+                if (modalState === ModalState.CREATE) {
                     dispatch(addPurchaseAction(values));
-                } else if(modalState === 'edit') {
-                    const id = state.purchases.find(purchase => purchase.isEdited)?.id;
-                    if(id) {
-                        dispatch(editPurchaseAction(id, values));
-                    }
+                } else if (modalState === ModalState.EDIT && purchaseValues?.id) {
+                        dispatch(editPurchaseAction(purchaseValues?.id, values));
                 }
             },
         }

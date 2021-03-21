@@ -1,12 +1,12 @@
 import {createReducer} from "redux-create-reducer";
-import { ChangeModalState } from "../../actionTypes/types";
-import {ModalStore} from "./types";
+import {IChangeModalState} from "../../actionTypes/interface";
 import * as actionTypes from '../../actionTypes';
+import {ModalState, IModalStore} from "../../interface";
 
-const changeModalState = (state: ModalStore, action: ChangeModalState): ModalStore => ({
-    state: action.payload.state
+const changeModalState = (state: IModalStore, action: IChangeModalState): IModalStore => ({
+    modalState: action.payload.state
 });
 
-export const modal = createReducer<ModalStore, ChangeModalState>({state: 'hide'}, {
+export const modal = createReducer<IModalStore, IChangeModalState>({modalState: ModalState.HIDE}, {
     [actionTypes.CHANGE_MODAL_STATE]: changeModalState
 });
