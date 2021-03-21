@@ -1,10 +1,14 @@
 import * as actionTypes from '../actionTypes';
-import {FormValuesType} from '../reducers/purchases/types';
-import {AddPurchaseAction, ChangeModalState, DeletePurchaseAction, EditPurchaseAction} from "../actionTypes/types";
-import {ModalState} from "../reducers/modal/types";
+import {
+    IAddPurchaseAction,
+    IChangeModalState,
+    IDeletePurchaseAction,
+    IEditPurchaseAction
+} from "../actionTypes/interface";
 import uniqid from 'uniqid';
+import {IFormValues, ModalState} from "../interface";
 
-export const addPurchaseAction = (formValues: FormValuesType): AddPurchaseAction => ({
+export const addPurchaseAction = (formValues: IFormValues): IAddPurchaseAction => ({
     type: actionTypes.ADD_PURCHASE,
     payload: {
         id: uniqid(),
@@ -14,7 +18,7 @@ export const addPurchaseAction = (formValues: FormValuesType): AddPurchaseAction
     },
 });
 
-export const editPurchaseAction = (id: string, formValues: FormValuesType): EditPurchaseAction => ({
+export const editPurchaseAction = (id: string, formValues: IFormValues): IEditPurchaseAction => ({
     type: actionTypes.EDIT_PURCHASE,
     payload: {
         id: id,
@@ -22,12 +26,12 @@ export const editPurchaseAction = (id: string, formValues: FormValuesType): Edit
     },
 });
 
-export const deletePurchaseAction = (id: string): DeletePurchaseAction => ({
-   type: actionTypes.DELETE_PURCHASE,
-   payload: id
+export const deletePurchaseAction = (id: string): IDeletePurchaseAction => ({
+    type: actionTypes.DELETE_PURCHASE,
+    payload: id
 });
 
-export const changeModalState = (state: ModalState, purchaseId?: string): ChangeModalState => ({
+export const changeModalState = (state: ModalState, purchaseId?: string): IChangeModalState => ({
     type: actionTypes.CHANGE_MODAL_STATE,
     payload: {
         state,

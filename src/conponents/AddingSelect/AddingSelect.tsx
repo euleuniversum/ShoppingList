@@ -1,41 +1,18 @@
 import React from 'react';
-import {Select, Divider, Button, message, SelectProps} from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import {Select, message} from 'antd';
+import {IAddingSelectProps, IAddingSelectState} from "../../interface";
+import {AddButton} from "../AddButton/AddButton";
 
-const { Option } = Select;
+const {Option} = Select;
 
-interface Props extends SelectProps<string> {
-    addButtonText: string,
-    items: string[],
-    dispatch: any,
-}
-
-interface State {
-    inputValue: string,
-    newItem: string,
-}
-
-interface AddButtonProps {
-    menu:  React.ReactElement,
-    text: string,
-    onClick: () => void
-}
-const AddButton = ({ menu, text, onClick }: AddButtonProps) => {
-    return (
-        <>
-            <Divider style={{ margin: '4px 0' }} />
-            <Button type="link" icon={<PlusOutlined />} style={{width: '100%'}} onClick={onClick}>
-                {text}
-            </Button>
-        </>
-    )
-}
-
-class AddingSelect extends React.Component<Props, State> {
-    state = {
-        inputValue: '',
-        newItem: '',
-    };
+class AddingSelect extends React.Component<IAddingSelectProps, IAddingSelectState> {
+    constructor(props: IAddingSelectProps) {
+        super(props);
+        this.state = {
+            inputValue: '',
+            newItem: '',
+        };
+    }
 
     onInputChange = (value: string) => {
         this.setState({
@@ -44,8 +21,8 @@ class AddingSelect extends React.Component<Props, State> {
     };
 
     addItem = () => {
-        const { inputValue } = this.state;
-        if(inputValue) {
+        const {inputValue} = this.state;
+        if (inputValue) {
             this.setState({
                 inputValue: '',
                 newItem: inputValue,
@@ -56,8 +33,8 @@ class AddingSelect extends React.Component<Props, State> {
     };
 
     render() {
-        const { addButtonText, items, dispatch, ...selectProps} = this.props;
-        const { newItem } = this.state;
+        const {addButtonText, items, dispatch, ...selectProps} = this.props;
+        const {newItem} = this.state;
 
         return (
             <Select
@@ -71,14 +48,15 @@ class AddingSelect extends React.Component<Props, State> {
                 }
                 dropdownRender={menu => (
                     <div>
+                        {console.log(menu)}
                         {menu}
                         <AddButton
+                            menu={menu}
                             text={addButtonText}
                             onClick={this.addItem}
-                            menu={menu}
                         />
                     </div>
-                )} >
+                )}>
                 {[newItem, ...items].filter(Boolean).map(item => (
                     <Option key={item} value={item}>{item}</Option>
                 ))}

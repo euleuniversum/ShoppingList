@@ -1,21 +1,15 @@
 import { Table } from 'antd';
 import {getColumns} from "./columns";
-import {PurchaseType, TableRowType} from "../../reducers/purchases/types";
 import { clearArray } from '../../helpers/app';
+import {IShoppingTableProps, IShoppingTableRow} from "../../interface";
+import {useMemo} from "react";
 
-interface Props {
-    purchases: PurchaseType[],
-    onEditItem: (id: string) => void,
-    onDeleteItem: (id: string) => void,
-}
+export const ShoppingTable = ({ purchases, onEditItem, onDeleteItem }: IShoppingTableProps) => {
+    const columns = useMemo(() =>
+        getColumns(clearArray(purchases.map(purchase => purchase.whereBuy)), onEditItem, onDeleteItem),
+    [purchases, onEditItem, onDeleteItem ]);
 
-export const ShoppingTable = ({ purchases, onEditItem, onDeleteItem }: Props) => {
-    const columns = getColumns(
-        clearArray(purchases.map(purchase => purchase.whereBuy)),
-        onEditItem,
-        onDeleteItem
-    );
-    const data: TableRowType[] = purchases.map(purchase => ({
+    const data: IShoppingTableRow[] = purchases.map(purchase => ({
         key: purchase.id,
         ...purchase
     }));

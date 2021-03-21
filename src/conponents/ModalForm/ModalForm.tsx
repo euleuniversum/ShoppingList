@@ -1,23 +1,15 @@
 import {Form, FormInstance, Input, InputNumber, Modal} from "antd";
 import React from "react";
-import {FormValuesType} from "../../reducers/purchases/types";
 import AddingSelectContainer from "../../containers/AddingSelectContainer";
+import {IFormValues, IModalFormProps, IModalFormState} from "../../interface";
 
-interface Props {
-    title?: string,
-    visible?: boolean,
-    onClose: () => void,
-    onSubmit: (values: FormValuesType) => void,
-    initialValues?: FormValuesType
-}
+const widthFull = {width: '100%'};
 
-interface State {}
-
-class ModalForm extends React.Component<Props, State> {
+class ModalForm extends React.Component<IModalFormProps, IModalFormState> {
 
     private form = React.createRef<FormInstance>();
 
-    componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any) {
+    componentDidUpdate(prevProps: Readonly<IModalFormProps>, prevState: Readonly<IModalFormState>, snapshot?: any) {
         this.form.current?.resetFields();
     }
 
@@ -25,7 +17,7 @@ class ModalForm extends React.Component<Props, State> {
         this.form.current?.submit();
     };
 
-    onFinish = (values: FormValuesType) => {
+    onFinish = (values: IFormValues) => {
         this.props.onSubmit(values);
 
         this.handleClose();
@@ -37,33 +29,33 @@ class ModalForm extends React.Component<Props, State> {
     }
 
     render() {
-        const { title, visible, initialValues } = this.props;
+        const {title, visible, initialValues} = this.props;
         return (
             <Modal title={title} visible={visible} onOk={this.onOk} onCancel={this.handleClose}>
                 <Form
                     ref={this.form}
-                    labelCol={{ span: 6 }}
+                    labelCol={{span: 6}}
                     layout="horizontal"
                     onFinish={this.onFinish}
                     initialValues={initialValues}>
                     <Form.Item
                         label="Название"
                         name={'title'}
-                        rules={[{ required: true, message: 'Введите название покупки' }]}>
-                        <Input />
+                        rules={[{required: true, message: 'Введите название покупки'}]}>
+                        <Input/>
                     </Form.Item>
 
                     <Form.Item label="Количество" name={'quantity'}>
-                        <InputNumber style={{ width: '100%' }}/>
+                        <InputNumber style={widthFull}/>
                     </Form.Item>
 
                     <Form.Item label="Примерная цена" name={'price'}>
-                        <InputNumber style={{ width: '100%' }}/>
+                        <InputNumber style={widthFull}/>
                     </Form.Item>
 
                     <Form.Item label="Где купить" name={'whereBuy'}>
                         <AddingSelectContainer
-                            style={{ width: '100%' }}
+                            style={widthFull}
                             placeholder="Выберите место"
                             addButtonText={'Добавить место'}
                         />

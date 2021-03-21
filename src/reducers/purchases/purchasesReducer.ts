@@ -1,14 +1,16 @@
 import {createReducer} from "redux-create-reducer";
 import * as actionTypes from '../../actionTypes';
-import {AddPurchaseAction, ChangeModalState, DeletePurchaseAction, EditPurchaseAction} from "../../actionTypes/types";
-import {PurchaseActions, PurchasesStore} from "./types";
+import {IAddPurchaseAction, IChangeModalState, IDeletePurchaseAction, IEditPurchaseAction} from "../../actionTypes/interface";
+import {IPurchasesStore} from "../../interface";
 
-const addPurchase = (state: PurchasesStore, action: AddPurchaseAction) => ([
+type PurchaseActions = IAddPurchaseAction | IDeletePurchaseAction | IChangeModalState | IEditPurchaseAction ;
+
+const addPurchase = (state: IPurchasesStore, action: IAddPurchaseAction) => ([
     ...state,
     action.payload
 ]);
 
-const editPurchase = (state: PurchasesStore, action: EditPurchaseAction) => ([
+const editPurchase = (state: IPurchasesStore, action: IEditPurchaseAction) => ([
     ...state.map(purchase => {
         const values = action.payload;
         if(purchase.id === values.id) {
@@ -26,11 +28,11 @@ const editPurchase = (state: PurchasesStore, action: EditPurchaseAction) => ([
     }),
 ]);
 
-const deletePurchase = (state: PurchasesStore, action: DeletePurchaseAction) => ([
+const deletePurchase = (state: IPurchasesStore, action: IDeletePurchaseAction) => ([
     ...state.filter(purchase => purchase.id !== action.payload)
 ]);
 
-const changeModal = (state: PurchasesStore, action: ChangeModalState) => {
+const changeModal = (state: IPurchasesStore, action: IChangeModalState) => {
     const { purchaseId } = action.payload
     return state.map(purchase => {
         if (purchase.id === purchaseId) {
@@ -46,7 +48,7 @@ const changeModal = (state: PurchasesStore, action: ChangeModalState) => {
     });
 }
 
-export const purchases = createReducer<PurchasesStore, PurchaseActions>([], {
+export const purchases = createReducer<IPurchasesStore, PurchaseActions>([], {
     [actionTypes.ADD_PURCHASE]: addPurchase,
     [actionTypes.DELETE_PURCHASE]: deletePurchase,
     [actionTypes.CHANGE_MODAL_STATE]: changeModal,
