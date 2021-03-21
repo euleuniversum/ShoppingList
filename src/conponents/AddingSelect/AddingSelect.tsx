@@ -46,6 +46,7 @@ class AddingSelect extends React.Component<IAddingSelectProps, IAddingSelectStat
                 filterOption={(input, option) =>
                     option?.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                 }
+                //TODO доделать выпадашку
                 dropdownRender={menu => (
                     <div>
                         {console.log(menu)}
