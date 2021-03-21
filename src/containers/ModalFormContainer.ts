@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 import ModalForm from "../conponents/ModalForm/ModalForm";
 import {addPurchaseAction, changeModalState, editPurchaseAction} from "../actionCreators";
-import {ModalState, IRootStore, IFormValues, IPurchaseItem} from "../interface";
+import {ModalState, IRootStore, IFormValues, IPurchaseItem, Unit} from "../interface";
 
 const getModalProps = (modalState: ModalState, purchaseValues: IPurchaseItem | undefined) => {
     const defaultModalProps = {
@@ -28,6 +28,7 @@ const getModalProps = (modalState: ModalState, purchaseValues: IPurchaseItem | u
                         title: purchaseValues.title,
                         quantity: purchaseValues.quantity,
                         price: purchaseValues.price,
+                        unit: purchaseValues.unit,
                         whereBuy: purchaseValues.whereBuy,
                     },
                     state: modalState,

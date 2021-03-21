@@ -62,12 +62,30 @@ class ModalForm extends React.Component<IModalFormProps, IModalFormState> {
                         <Input/>
                     </Form.Item>
 
-                    <Form.Item label="Количество" name={'quantity'}>
-                        <InputNumber style={widthFull}/>
+                    <Form.Item label="Количество" >
+                        <Form.Item  name={'quantity'} noStyle>
+                            <InputNumber style={{width: '65%'}} />
+                        </Form.Item>
+                        <Form.Item  name={'unit'} noStyle>
+                            <Select
+                                style={{width: '35%', top: '-1px'}}
+                                onChange={this.onUnitChange}
+                            >
+                                <Option value={Unit.PIECES}>{Unit.PIECES}</Option>
+                                <Option value={Unit.KILOGRAM}>{Unit.KILOGRAM}</Option>
+                                <Option value={Unit.GRAM}>{Unit.GRAM}</Option>
+                                <Option value={Unit.METER}>{Unit.METER}</Option>
+                                <Option value={Unit.LITER}>{Unit.LITER}</Option>
+                                <Option value={Unit.ALL}>{Unit.ALL}</Option>
+                            </Select>
+                        </Form.Item>
                     </Form.Item>
 
-                    <Form.Item label="Примерная цена" name={'price'}>
-                        <InputNumber style={widthFull}/>
+                    <Form.Item label="Примерная цена" >
+                        <Form.Item  name={'price'} noStyle>
+                            <InputNumber style={{width: '65%'}}/>
+                        </Form.Item>
+                            <div style={{width: '35%', top: '-1px'}}>{unit}</div>
                     </Form.Item>
 
                     <Form.Item label="Где купить" name={'whereBuy'}>

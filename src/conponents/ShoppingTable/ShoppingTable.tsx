@@ -11,7 +11,8 @@ export const ShoppingTable = ({ purchases, onEditItem, onDeleteItem }: IShopping
 
     const data: IShoppingTableRow[] = purchases.map(purchase => ({
         key: purchase.id,
-        ...purchase
+        ...purchase,
+        quantity: `${purchase.quantity} ${purchase.unit}`
     }));
 
     const onChange = (pagination: any, filters: any, sorter: any, extra: any) => {

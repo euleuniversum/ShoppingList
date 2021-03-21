@@ -12,6 +12,15 @@ export enum ModalState {
     HIDE = 'hide'
 }
 
+export enum Unit {
+    KILOGRAM = 'кг',
+    GRAM = 'г',
+    PIECES = 'шт',
+    METER = 'м',
+    LITER = 'л',
+    ALL = 'за все'
+}
+
 export interface IModalStore {
     modalState: ModalState
 }
