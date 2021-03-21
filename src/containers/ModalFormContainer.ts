@@ -15,6 +15,9 @@ const getModalProps = (modalState: ModalState, purchaseValues: IPurchaseItem | u
                 title: 'Добавить элемент',
                 visible: true,
                 state: modalState,
+                initialValues: {
+                    unit: Unit.ALL,
+                }
             }
         case ModalState.EDIT: {
             if (purchaseValues) {

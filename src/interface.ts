@@ -18,7 +18,8 @@ export interface IModalStore {
 
 export interface IFormValues {
     title: string,
-    quantity?: number,
+    quantity?: number | string,
+    unit?: Unit,
     price?: number,
     whereBuy?: string,
 }
@@ -32,6 +33,7 @@ export interface IModalFormProps {
 }
 
 export interface IModalFormState {
+    unit: Unit;
 }
 
 export interface IPurchaseItem extends IFormValues {
