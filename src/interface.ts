@@ -1,5 +1,6 @@
 import React from "react";
 import {SelectProps} from "antd";
+import {Unit} from "./units";
 
 export interface IRootStore {
     purchases: IPurchasesStore,
@@ -12,15 +13,6 @@ export enum ModalState {
     HIDE = 'hide'
 }
 
-export enum Unit {
-    KILOGRAM = 'кг',
-    GRAM = 'г',
-    PIECES = 'шт',
-    METER = 'м',
-    LITER = 'л',
-    ALL = 'за все'
-}
-
 export interface IModalStore {
     modalState: ModalState
 }
@@ -28,8 +20,9 @@ export interface IModalStore {
 export interface IFormValues {
     title: string,
     quantity?: number | string,
-    unit?: Unit,
+    quantityUnit?: Unit,
     price?: number,
+    priceUnit?: Unit,
     whereBuy?: string,
 }
 
@@ -42,7 +35,8 @@ export interface IModalFormProps {
 }
 
 export interface IModalFormState {
-    unit: Unit;
+    priceUnit: Unit,
+    quantityUnit: Unit,
 }
 
 export interface IPurchaseItem extends IFormValues {

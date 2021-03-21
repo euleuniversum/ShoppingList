@@ -1,9 +1,9 @@
 import {Form, FormInstance, Input, InputNumber, Modal, Select} from "antd";
 import React from "react";
 import AddingSelectContainer from "../../containers/AddingSelectContainer";
-import {IFormValues, IModalFormProps, IModalFormState, Unit} from "../../interface";
+import {IFormValues, IModalFormProps, IModalFormState} from "../../interface";
+import {getPriceUnit, QuantityUnit, Unit} from "../../units";
 
-const widthFull = {width: '100%'};
 const {Option} = Select;
 
 class ModalForm extends React.Component<IModalFormProps, IModalFormState> {
@@ -13,15 +13,18 @@ class ModalForm extends React.Component<IModalFormProps, IModalFormState> {
     constructor(props: IModalFormProps) {
         super(props);
         this.state = {
-            unit: props.initialValues?.unit || Unit.ALL
+            priceUnit: props.initialValues?.priceUnit || Unit.ALL,
+            quantityUnit: props.initialValues?.quantityUnit || Unit.PIECE
         };
     }
 
     componentDidUpdate(prevProps: Readonly<IModalFormProps>, prevState: Readonly<IModalFormState>, snapshot?: any) {
-        console.log(prevProps, this.props, prevProps === this.props);
         if (prevProps !== this.props) {
             this.form.current?.resetFields();
-            this.setState({unit: this.props.initialValues?.unit || Unit.ALL});
+            this.setState({
+                priceUnit: this.props.initialValues?.priceUnit || Unit.ALL,
+                quantityUnit: this.props.initialValues?.quantityUnit || Unit.PIECE
+            });
         }
     }
 
@@ -40,13 +43,30 @@ class ModalForm extends React.Component<IModalFormProps, IModalFormState> {
         this.props.onClose();
     }
 
-    onUnitChange = (value: Unit) => {
-        this.setState({unit: value});
+    onQuantityUnitChange = (value: Unit) => {
+        this.setState({quantityUnit: value});
+    }
+
+    onPriceUnitChange = (value: Unit) => {
+        this.setState({priceUnit: value});
+    }
+
+    getUnitOptions(units: Unit[]) {
+        let options: JSX.Element[] = [];
+        units.map(unit => {
+            options.push(<Option key={unit} value={unit}>{unit}</Option>)
+        });
+        return options;
+    }
+
+    getPriceUnitOptions(quantityUnit: Unit) {
+        const priceUnit = getPriceUnit(quantityUnit);
+        return this.getUnitOptions(priceUnit);
     }
 
     render() {
         const {title, visible, initialValues} = this.props;
-        const {unit} = this.state;
+        const {quantityUnit, priceUnit} = this.state;
         return (
             <Modal title={title} visible={visible} onOk={this.onOk} onCancel={this.handleClose}>
                 <Form
@@ -62,35 +82,37 @@ class ModalForm extends React.Component<IModalFormProps, IModalFormState> {
                         <Input/>
                     </Form.Item>
 
-                    <Form.Item label="Количество" >
-                        <Form.Item  name={'quantity'} noStyle>
-                            <InputNumber style={{width: '65%'}} />
+                    <Form.Item label="Количество">
+                        <Form.Item name={'quantity'} noStyle>
+                            <InputNumber style={{width: '65%'}}/>
                         </Form.Item>
-                        <Form.Item  name={'unit'} noStyle>
+                        <Form.Item name={'quantityUnit'} noStyle>
                             <Select
                                 style={{width: '35%', top: '-1px'}}
-                                onChange={this.onUnitChange}
+                                onChange={this.onQuantityUnitChange}
                             >
-                                <Option value={Unit.PIECES}>{Unit.PIECES}</Option>
-                                <Option value={Unit.KILOGRAM}>{Unit.KILOGRAM}</Option>
-                                <Option value={Unit.GRAM}>{Unit.GRAM}</Option>
-                                <Option value={Unit.METER}>{Unit.METER}</Option>
-                                <Option value={Unit.LITER}>{Unit.LITER}</Option>
-                                <Option value={Unit.ALL}>{Unit.ALL}</Option>
+                                {this.getUnitOptions(QuantityUnit)}
                             </Select>
                         </Form.Item>
                     </Form.Item>
 
-                    <Form.Item label="Примерная цена" >
-                        <Form.Item  name={'price'} noStyle>
+                    <Form.Item label="Примерная цена">
+                        <Form.Item name={'price'} noStyle>
                             <InputNumber style={{width: '65%'}}/>
                         </Form.Item>
-                            <div style={{width: '35%', top: '-1px'}}>{unit}</div>
+                        <Form.Item name={'priceUnit'} noStyle>
+                            <Select
+                                style={{width: '35%'}}
+                                onChange={this.onPriceUnitChange}
+                            >
+                                {this.getPriceUnitOptions(quantityUnit)}
+                            </Select>
+                        </Form.Item>
                     </Form.Item>
 
                     <Form.Item label="Где купить" name={'whereBuy'}>
                         <AddingSelectContainer
-                            style={widthFull}
+                            style={{width: '100%'}}
                             placeholder="Выберите место"
                             addButtonText={'Добавить место'}
                         />

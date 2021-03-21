@@ -12,7 +12,7 @@ export const ShoppingTable = ({ purchases, onEditItem, onDeleteItem }: IShopping
     const data: IShoppingTableRow[] = purchases.map(purchase => ({
         key: purchase.id,
         ...purchase,
-        quantity: `${purchase.quantity} ${purchase.unit}`
+        quantity: `${purchase.quantity} ${purchase.quantityUnit}`,
     }));
 
     const onChange = (pagination: any, filters: any, sorter: any, extra: any) => {

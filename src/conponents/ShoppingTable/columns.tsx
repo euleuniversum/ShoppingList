@@ -30,6 +30,10 @@ export function getColumns(filterValues: string[],
             },
         },
         {
+            title: '',
+            dataIndex: setDataIndex('priceUnit'),
+        },
+        {
             title: 'Где купить',
             dataIndex: setDataIndex('whereBuy'),
             filters: filterValues.map(item => ({
