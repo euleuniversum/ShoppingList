@@ -19,10 +19,10 @@ export interface IModalStore {
 
 export interface IFormValues {
     title: string,
-    quantity?: number | string,
-    quantityUnit?: Unit,
-    price?: number | string,
-    priceUnit?: Unit,
+    quantity?: number,
+    quantityUnit: Unit,
+    price?: number,
+    priceUnit: Unit,
     total?: number,
     whereBuy?: string,
 }
@@ -87,4 +87,13 @@ export interface AddButtonProps {
 
 export interface IDateValueProps {
     date: Date
+}
+
+export interface IPriceCellProps {
+    purchase: IShoppingTableRow
+}
+
+export interface IUnitConformity {
+    name: Unit,
+    ratio: number,
 }

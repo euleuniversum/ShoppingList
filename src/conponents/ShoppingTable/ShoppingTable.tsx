@@ -11,13 +11,9 @@ export const ShoppingTable = ({ purchases, onEditItem, onDeleteItem }: IShopping
 
 
     const data: IShoppingTableRow[] = purchases.map((purchase) => {
-        const quantityStr = purchase.quantity ? `${purchase.quantity} ${purchase.quantityUnit}` : '';
-        const priceStr = purchase.price ? `${purchase.price} р/${purchase.priceUnit}` : '';
         return {
             key: purchase.id,
             ...purchase,
-            quantity: quantityStr,
-            price: priceStr,
         }
 
     });

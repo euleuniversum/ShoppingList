@@ -2,6 +2,8 @@ import {ColumnsType} from "antd/lib/table/interface";
 import {IShoppingTableRow} from "../../interface";
 import {DateValue} from "../DateValue/DateValue";
 import {ElementActions} from "../ElementActions/ElementActions";
+import PriceCell from "../PriceCell/PriceCell";
+import {getTotalPriceElement} from "../../units";
 
 const setDataIndex = (value: keyof IShoppingTableRow): keyof IShoppingTableRow => value;
 
@@ -18,27 +20,17 @@ export function getColumns(filterValues: string[],
         {
             title: 'Количество',
             dataIndex: setDataIndex('quantity'),
+            render: (quantity, purchase) => `${quantity || 0} ${purchase.quantityUnit}`,
         },
         {
             title: 'Примерная цена',
             dataIndex: setDataIndex('price'),
             sortDirections: ['descend', 'ascend'],
-            sorter: (a, b) => {
-                const aPrice = (a.price && typeof a.price === 'string') ? parseInt(a.price) : 0;
-                const bPrice = (b.price && typeof b.price === 'string') ? parseInt(b.price) : 0;
-                return aPrice - bPrice;
-            },
+            render: (price, purchase) => <PriceCell purchase={purchase}/>,
+            sorter: (a, b) => (
+                getTotalPriceElement(a) - getTotalPriceElement(b)
+            ),
         },
-        // {
-        //     title: 'Итого',
-        //     dataIndex: setDataIndex('total'),
-        //     sortDirections: ['descend', 'ascend'],
-        //     sorter: (a, b) => {
-        //         const aTotal = a.total || 0;
-        //         const bTotal = b.total || 0;
-        //         return aTotal - bTotal;
-        //     },
-        // },
         {
             title: 'Где купить',
             dataIndex: setDataIndex('whereBuy'),
@@ -46,22 +38,26 @@ export function getColumns(filterValues: string[],
                 text: item,
                 value: item
             })),
-            onFilter: (value, record) => record.whereBuy?.indexOf(value as string) === 0,
+            onFilter: (value, purchase) => (
+                purchase.whereBuy?.indexOf(value as string) === 0
+            ),
         },
         {
             title: 'Дата добавления',
             dataIndex: setDataIndex('creationDate'),
             render: date => <DateValue date={date}/>,
             sortDirections: ['descend', 'ascend'],
-            sorter: (a, b) => a.creationDate > b.creationDate ? 1 : -1,
+            sorter: (a, b) => (
+                a.creationDate > b.creationDate ? 1 : -1
+            ),
         },
         {
             title: 'Действия',
             dataIndex: 'actions',
-            render: (text, record) => (
+            render: (text, purchase) => (
                 <ElementActions
-                    id={record.key}
-                    title={record.title}
+                    id={purchase.key}
+                    title={purchase.title}
                     onEdit={onEdit}
                     onDelete={onDelete}
                 />
