@@ -9,11 +9,18 @@ export const ShoppingTable = ({ purchases, onEditItem, onDeleteItem }: IShopping
         getColumns(clearArray(purchases.map(purchase => purchase.whereBuy)), onEditItem, onDeleteItem),
     [purchases, onEditItem, onDeleteItem ]);
 
-    const data: IShoppingTableRow[] = purchases.map(purchase => ({
-        key: purchase.id,
-        ...purchase,
-        quantity: `${purchase.quantity} ${purchase.quantityUnit}`,
-    }));
+
+    const data: IShoppingTableRow[] = purchases.map((purchase) => {
+        const quantityStr = purchase.quantity ? `${purchase.quantity} ${purchase.quantityUnit}` : '';
+        const priceStr = purchase.price ? `${purchase.price} ${purchase.priceUnit}` : '';
+        return {
+            key: purchase.id,
+            ...purchase,
+            quantity: quantityStr,
+            price: priceStr,
+        }
+
+    });
 
     const onChange = (pagination: any, filters: any, sorter: any, extra: any) => {
         console.log('params', pagination, filters, sorter, extra);

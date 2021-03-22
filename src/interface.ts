@@ -21,8 +21,9 @@ export interface IFormValues {
     title: string,
     quantity?: number | string,
     quantityUnit?: Unit,
-    price?: number,
+    price?: number | string,
     priceUnit?: Unit,
+    total?: number,
     whereBuy?: string,
 }
 

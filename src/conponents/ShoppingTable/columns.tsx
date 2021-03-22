@@ -24,15 +24,21 @@ export function getColumns(filterValues: string[],
             dataIndex: setDataIndex('price'),
             sortDirections: ['descend', 'ascend'],
             sorter: (a, b) => {
-                const aPrice = a.price || 0;
-                const bPrice = b.price || 0;
+                const aPrice = (a.price && typeof a.price === 'string') ? parseInt(a.price) : 0;
+                const bPrice = (b.price && typeof b.price === 'string') ? parseInt(b.price) : 0;
                 return aPrice - bPrice;
             },
         },
-        {
-            title: '',
-            dataIndex: setDataIndex('priceUnit'),
-        },
+        // {
+        //     title: 'Итого',
+        //     dataIndex: setDataIndex('total'),
+        //     sortDirections: ['descend', 'ascend'],
+        //     sorter: (a, b) => {
+        //         const aTotal = a.total || 0;
+        //         const bTotal = b.total || 0;
+        //         return aTotal - bTotal;
+        //     },
+        // },
         {
             title: 'Где купить',
             dataIndex: setDataIndex('whereBuy'),

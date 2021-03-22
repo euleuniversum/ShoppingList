@@ -18,7 +18,6 @@ const conformity = new Map([
     [Unit.MILLILITER, Unit.LITER]
 ]);
 
-
 function getConformity(unit: Unit) {
     return conformity.has(unit) ? conformity.get(unit) : undefined;
 }
@@ -38,4 +37,12 @@ export const QuantityUnit: Unit[] = [
     Unit.GRAM,
     Unit.CENTIMETER,
     Unit.MILLILITER,
-]
+];
+
+export const convertUnits = () => {
+//TODO конвертация юнитов
+}
+
+export const getTotalPriceElement = () => {
+
+}

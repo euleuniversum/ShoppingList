@@ -66,7 +66,7 @@ class ModalForm extends React.Component<IModalFormProps, IModalFormState> {
 
     render() {
         const {title, visible, initialValues} = this.props;
-        const {quantityUnit, priceUnit} = this.state;
+        const {quantityUnit } = this.state;
         return (
             <Modal title={title} visible={visible} onOk={this.onOk} onCancel={this.handleClose}>
                 <Form
