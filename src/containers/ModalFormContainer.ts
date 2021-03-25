@@ -22,6 +22,7 @@ const getModalProps = (modalState: ModalState, purchaseValues: IPurchaseItem | u
                 }
             }
         case ModalState.EDIT: {
+            console.log(purchaseValues)
             if (purchaseValues) {
                 return {
                     title: 'Редактировать элемент',
@@ -36,7 +37,8 @@ const getModalProps = (modalState: ModalState, purchaseValues: IPurchaseItem | u
                     },
                     state: modalState,
                 }
-            } return defaultModalProps;
+            }
+            return defaultModalProps;
         }
         case ModalState.HIDE:
         default:
@@ -59,7 +61,7 @@ export default connect(
                 if (modalState === ModalState.CREATE) {
                     dispatch(addPurchaseAction(values));
                 } else if (modalState === ModalState.EDIT && purchaseValues?.id) {
-                        dispatch(editPurchaseAction(purchaseValues?.id, values));
+                    dispatch(editPurchaseAction(purchaseValues?.id, values));
                 }
             },
         }

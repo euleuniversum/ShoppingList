@@ -1,21 +1,19 @@
-import { Table } from 'antd';
+import {Table} from 'antd';
 import {getColumns} from "./columns";
-import { clearArray } from '../../helpers/app';
+import {clearArray} from '../../helpers/app';
 import {IShoppingTableProps, IShoppingTableRow} from "../../interface";
 import {useMemo} from "react";
 
-export const ShoppingTable = ({ purchases, onEditItem, onDeleteItem }: IShoppingTableProps) => {
+export const ShoppingTable = ({purchases, onEditItem, onDeleteItem}: IShoppingTableProps) => {
     const columns = useMemo(() =>
-        getColumns(clearArray(purchases.map(purchase => purchase.whereBuy)), onEditItem, onDeleteItem),
-    [purchases, onEditItem, onDeleteItem ]);
-
+            getColumns(clearArray(purchases.map(purchase => purchase.whereBuy)), onEditItem, onDeleteItem),
+        [purchases, onEditItem, onDeleteItem]);
 
     const data: IShoppingTableRow[] = purchases.map((purchase) => {
         return {
             key: purchase.id,
             ...purchase,
         }
-
     });
 
     const onChange = (pagination: any, filters: any, sorter: any, extra: any) => {

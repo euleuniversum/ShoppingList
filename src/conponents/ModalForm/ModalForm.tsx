@@ -84,7 +84,7 @@ class ModalForm extends React.Component<IModalFormProps, IModalFormState> {
 
                     <Form.Item label="Количество">
                         <Form.Item name={'quantity'} noStyle>
-                            <InputNumber style={{width: '65%'}}/>
+                            <InputNumber min={0} style={{width: '65%'}}/>
                         </Form.Item>
                         <Form.Item name={'quantityUnit'} noStyle>
                             <Select
@@ -98,7 +98,7 @@ class ModalForm extends React.Component<IModalFormProps, IModalFormState> {
 
                     <Form.Item label="Примерная цена">
                         <Form.Item name={'price'} noStyle>
-                            <InputNumber style={{width: '65%'}}/>
+                            <InputNumber min={0} style={{width: '65%'}}/>
                         </Form.Item>
                         <Form.Item name={'priceUnit'} noStyle>
                             <Select

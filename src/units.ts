@@ -1,4 +1,4 @@
-import { IFormValues, IUnitConformity } from "./interface";
+import {IFormValues, IUnitConformity} from "./interface";
 
 export enum Unit {
     PIECE = 'шт',
@@ -22,13 +22,13 @@ const conformity = new Map<Unit, IUnitConformity[]>([
         [{name: Unit.MILLILITER, ratio: 1000}]
     ],
     [Unit.GRAM,
-        [{name: Unit.KILOGRAM, ratio: 1/1000}]
+        [{name: Unit.KILOGRAM, ratio: 1 / 1000}]
     ],
     [Unit.CENTIMETER,
-        [{name: Unit.METER, ratio: 1/100}]
+        [{name: Unit.METER, ratio: 1 / 100}]
     ],
     [Unit.MILLILITER,
-        [{name: Unit.LITER, ratio: 1/1000}]
+        [{name: Unit.LITER, ratio: 1 / 1000}]
     ]
 ]);
 
@@ -57,15 +57,8 @@ export const QuantityUnit: Unit[] = [
 ];
 
 export const convertUnits = (from: Unit, to: Unit, quantity: number = 1) => {
-    if (from === to) {
-        return quantity;
-
-    } else if (to === Unit.ALL) {
-        if (quantity === 0) {
-            return 0;
-        }
-
-        return 1;
+    if (from !== to && to === Unit.ALL) {
+        return (quantity === 0) ? 0 : 1;
 
     } else if (conformity.has(from)) {
         const ratio = conformity.get(from)?.find(item => item.name === to)?.ratio;
@@ -73,7 +66,6 @@ export const convertUnits = (from: Unit, to: Unit, quantity: number = 1) => {
             return quantity * ratio;
         }
     }
-
     return quantity;
 }
 
