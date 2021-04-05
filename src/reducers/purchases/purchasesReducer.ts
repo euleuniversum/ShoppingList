@@ -44,6 +44,7 @@ const changeModal = (state: IPurchasesStore, action: IChangeModalState) => {
 
         return {
             ...purchase,
+            isEdited: false
         }
     });
 }
