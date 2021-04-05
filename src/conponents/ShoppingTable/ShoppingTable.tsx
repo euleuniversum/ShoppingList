@@ -39,7 +39,7 @@ export const ShoppingTable = ({purchases, onEditItem, onDeleteItem}: IShoppingTa
                         <Table.Summary.Row className={styles.tfoot_th}>
                             <Table.Summary.Cell className={styles.tfoot_td} index={1} colSpan={2}>Итого:</Table.Summary.Cell>
                             <Table.Summary.Cell className={styles.tfoot_td} index={2} colSpan={4}>
-                                {totalPrice}
+                                {totalPrice}р
                             </Table.Summary.Cell>
                         </Table.Summary.Row>
                     </>

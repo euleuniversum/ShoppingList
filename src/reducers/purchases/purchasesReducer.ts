@@ -17,10 +17,7 @@ const editPurchase = (state: IPurchasesStore, action: IEditPurchaseAction) => ([
             return {
                 ...purchase,
                 isEdited: false,
-                title: values.title,
-                quantity: values.quantity,
-                price: values.price,
-                whereBuy: values.whereBuy,
+                ...values
             }
         }
 
