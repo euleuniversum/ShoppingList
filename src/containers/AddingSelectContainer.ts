@@ -1,5 +1,5 @@
 import {connect} from "react-redux";
-import AddingSelect from "../conponents/AddingSelect/AddingSelect";
+import AddingSelect from "../components/AddingSelect/AddingSelect";
 import {clearArray} from "../helpers/app";
 import {IRootStore} from "../interface";
 

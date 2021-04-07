@@ -6,17 +6,32 @@ import {IShoppingTableProps, IShoppingTableRow} from "../../interface";
 import {useMemo} from "react";
 import {getTotalPriceElement} from "../../units";
 
-export const ShoppingTable = ({purchases, onEditItem, onDeleteItem}: IShoppingTableProps) => {
+export const ShoppingTable = ({purchases, onAddReplacement, onEditItem, onDeleteItem}: IShoppingTableProps) => {
     const columns = useMemo(() =>
-            getColumns(clearArray(purchases.map(purchase => purchase.whereBuy)), onEditItem, onDeleteItem),
+            getColumns(
+                clearArray(
+                    purchases
+                        .filter(purchase => !purchase.replacementFor)
+                        .map(purchase => purchase.whereBuy)
+                ),
+                onAddReplacement,
+                onEditItem,
+                onDeleteItem
+            ),
         [purchases, onEditItem, onDeleteItem]);
 
-    const data: IShoppingTableRow[] = purchases.map((purchase) => {
-        return {
-            key: purchase.id,
-            ...purchase,
-        }
-    });
+    const data: IShoppingTableRow[] = purchases
+        .filter(purchase => !purchase.replacementFor)
+        .map((purchase) => {
+            const purchaseObject: IShoppingTableRow = {key: purchase.id, ...purchase};
+            const childrenList = purchases
+                .filter(item => item.replacementFor === purchase.id)
+                .map(item => ({key: item.id, ...item}));
+
+            if (childrenList.length > 0) purchaseObject.children = childrenList;
+
+            return purchaseObject;
+        });
 
     const onChange = (pagination: any, filters: any, sorter: any, extra: any) => {
         console.log('params', pagination, filters, sorter, extra);

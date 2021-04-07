@@ -31,10 +31,11 @@ export const deletePurchaseAction = (id: string): IDeletePurchaseAction => ({
     payload: id
 });
 
-export const changeModalState = (state: ModalState, purchaseId?: string): IChangeModalState => ({
+export const changeModalState = (state: ModalState, purchaseId?: string, replacementFor?: string): IChangeModalState => ({
     type: actionTypes.CHANGE_MODAL_STATE,
     payload: {
         state,
-        purchaseId
+        purchaseId,
+        replacementFor
     }
 });

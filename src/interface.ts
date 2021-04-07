@@ -14,7 +14,8 @@ export enum ModalState {
 }
 
 export interface IModalStore {
-    modalState: ModalState
+    modalState: ModalState,
+    replacementFor?: string
 }
 
 export interface IFormValues {
@@ -25,20 +26,13 @@ export interface IFormValues {
     priceUnit: Unit,
     total?: number,
     whereBuy?: string,
-    replacements?: {
-        title: string,
-        quantity?: number,
-        quantityUnit: Unit,
-        price?: number,
-        priceUnit: Unit,
-        total?: number,
-        whereBuy?: string,
-    }[]
+    replacementFor?: string
 }
 
 export interface IModalFormProps {
     title?: string,
     visible?: boolean,
+    replacementFor?: string,
     onClose: () => void,
     onSubmit: (values: IFormValues) => void,
     initialValues?: IFormValues
@@ -61,6 +55,7 @@ export interface IPurchasesStore extends Array<IPurchaseItem> {
 
 export interface IShoppingTableProps {
     purchases: IPurchaseItem[],
+    onAddReplacement: (id: string) => void,
     onEditItem: (id: string) => void,
     onDeleteItem: (id: string) => void,
 }
@@ -68,11 +63,14 @@ export interface IShoppingTableProps {
 export interface IShoppingTableRow extends IFormValues {
     key: string,
     creationDate: Date,
+    children?: IShoppingTableRow[]
 }
 
 export interface IElementActionsProps {
     id: string,
     title: string,
+    showReplacementButton: boolean,
+    onAddReplacement: (id: string) => void,
     onEdit: (id: string) => void,
     onDelete: (id: string) => void
 }
