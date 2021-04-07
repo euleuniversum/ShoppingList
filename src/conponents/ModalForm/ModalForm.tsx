@@ -1,8 +1,9 @@
-import {Form, FormInstance, Input, InputNumber, Modal, Select} from "antd";
+import {Button, Form, FormInstance, Input, InputNumber, Modal, Select} from "antd";
 import React from "react";
 import AddingSelectContainer from "../../containers/AddingSelectContainer";
 import {IFormValues, IModalFormProps, IModalFormState} from "../../interface";
 import {getPriceUnit, QuantityUnit, Unit} from "../../units";
+import {MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
 
 const {Option} = Select;
 
@@ -30,6 +31,7 @@ class ModalForm extends React.Component<IModalFormProps, IModalFormState> {
 
     onOk = () => {
         this.form.current?.submit();
+        console.log(this.form.current);
     };
 
     onFinish = (values: IFormValues) => {
@@ -74,7 +76,8 @@ class ModalForm extends React.Component<IModalFormProps, IModalFormState> {
                     labelCol={{span: 6}}
                     layout="horizontal"
                     onFinish={this.onFinish}
-                    initialValues={initialValues}>
+                    initialValues={initialValues}
+                >
                     <Form.Item
                         label="Название"
                         name={'title'}
@@ -117,6 +120,88 @@ class ModalForm extends React.Component<IModalFormProps, IModalFormState> {
                             addButtonText={'Добавить место'}
                         />
                     </Form.Item>
+
+                    <Form.List name={'replacements'}>
+                        {(fields, {add, remove}) => (
+                            <>
+                                {fields.map(({ key, name, fieldKey, ...restField }) => (
+                                    <div key={key}>
+                                        <MinusCircleOutlined onClick={() => remove(name)}/>
+                                        <Form.Item
+                                            {...restField}
+                                            label="Название"
+                                            name={'title'}
+                                            fieldKey={[fieldKey, 'title']}
+                                            rules={[{required: true, message: 'Введите название покупки'}]}>
+                                            <Input/>
+                                        </Form.Item>
+
+                                        <Form.Item label="Количество">
+                                            <Form.Item
+                                                {...restField}
+                                                name={'quantity'}
+                                                fieldKey={[fieldKey, 'quantity']}
+                                                noStyle>
+                                                <InputNumber min={0} style={{width: '65%'}}/>
+                                            </Form.Item>
+                                            <Form.Item
+                                                {...restField}
+                                                name={'quantityUnit'}
+                                                fieldKey={[fieldKey, 'quantityUnit']}
+                                                noStyle>
+                                                <Select
+                                                    style={{width: '35%', top: '-1px'}}
+                                                    onChange={this.onQuantityUnitChange}
+                                                >
+                                                    {this.getUnitOptions(QuantityUnit)}
+                                                </Select>
+                                            </Form.Item>
+                                        </Form.Item>
+
+                                        <Form.Item label="Примерная цена">
+                                            <Form.Item
+                                                {...restField}
+                                                name={'price'}
+                                                fieldKey={[fieldKey, 'price']}
+                                                noStyle>
+                                                <InputNumber min={0} style={{width: '65%'}}/>
+                                            </Form.Item>
+                                            <Form.Item
+                                                {...restField}
+                                                name={'priceUnit'}
+                                                fieldKey={[fieldKey, 'priceUnit']}
+                                                noStyle>
+                                                <Select
+                                                    style={{width: '35%'}}
+                                                    onChange={this.onPriceUnitChange}
+                                                >
+                                                    {this.getPriceUnitOptions(quantityUnit)}
+                                                </Select>
+                                            </Form.Item>
+                                        </Form.Item>
+
+                                        <Form.Item
+                                            {...restField}
+                                            label="Где купить"
+                                            fieldKey={[fieldKey, 'whereBuy']}
+                                            name={'whereBuy'}>
+                                            <AddingSelectContainer
+                                                style={{width: '100%'}}
+                                                placeholder="Выберите место"
+                                                addButtonText={'Добавить место'}
+                                            />
+                                        </Form.Item>
+
+                                    </div>
+                                ))}
+                                <Form.Item>
+                                    <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined/>}>
+                                        Добавить замену
+                                    </Button>
+                                </Form.Item>
+                            </>
+                        )}
+                    </Form.List>
                 </Form>
             </Modal>
         )

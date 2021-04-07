@@ -20,7 +20,6 @@ const editPurchase = (state: IPurchasesStore, action: IEditPurchaseAction) => ([
                 ...values
             }
         }
-
         return purchase;
     }),
 ]);

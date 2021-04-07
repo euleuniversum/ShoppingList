@@ -34,6 +34,7 @@ const getModalProps = (modalState: ModalState, purchaseValues: IPurchaseItem | u
                         price: purchaseValues.price,
                         priceUnit: purchaseValues.priceUnit,
                         whereBuy: purchaseValues.whereBuy,
+                        replacements: purchaseValues.replacements
                     },
                     state: modalState,
                 }

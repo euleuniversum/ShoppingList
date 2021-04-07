@@ -25,6 +25,15 @@ export interface IFormValues {
     priceUnit: Unit,
     total?: number,
     whereBuy?: string,
+    replacements?: {
+        title: string,
+        quantity?: number,
+        quantityUnit: Unit,
+        price?: number,
+        priceUnit: Unit,
+        total?: number,
+        whereBuy?: string,
+    }[]
 }
 
 export interface IModalFormProps {
