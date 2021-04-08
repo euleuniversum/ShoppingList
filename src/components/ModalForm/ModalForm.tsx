@@ -30,10 +30,14 @@ class ModalForm extends React.Component<IModalFormProps, IModalFormState> {
 
     onOk = () => {
         this.form.current?.submit();
+        console.log(this.form.current);
     };
 
     onFinish = (values: IFormValues) => {
-        this.props.onSubmit(values);
+        this.props.onSubmit({
+            ...values,
+            replacementFor: this.props.replacementFor
+        });
         console.log(values);
         this.handleClose();
     };
@@ -74,7 +78,8 @@ class ModalForm extends React.Component<IModalFormProps, IModalFormState> {
                     labelCol={{span: 6}}
                     layout="horizontal"
                     onFinish={this.onFinish}
-                    initialValues={initialValues}>
+                    initialValues={initialValues}
+                >
                     <Form.Item
                         label="Название"
                         name={'title'}

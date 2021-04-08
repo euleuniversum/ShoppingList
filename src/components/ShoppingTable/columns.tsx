@@ -7,9 +7,12 @@ import {getTotalPriceElement} from "../../units";
 
 const setDataIndex = (value: keyof IShoppingTableRow): keyof IShoppingTableRow => value;
 
-export function getColumns(filterValues: string[],
-                           onEdit: (id: string) => void,
-                           onDelete: (id: string) => void): ColumnsType<IShoppingTableRow> {
+export function getColumns(
+    filterValues: string[],
+    onAddReplacement: (id: string) => void,
+    onEdit: (id: string) => void,
+    onDelete: (id: string) => void): ColumnsType<IShoppingTableRow>
+{
     return [
         {
             title: 'Название',
@@ -58,6 +61,8 @@ export function getColumns(filterValues: string[],
                 <ElementActions
                     id={purchase.key}
                     title={purchase.title}
+                    showReplacementButton={!purchase.replacementFor}
+                    onAddReplacement={onAddReplacement}
                     onEdit={onEdit}
                     onDelete={onDelete}
                 />

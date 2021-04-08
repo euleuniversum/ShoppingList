@@ -22,5 +22,6 @@ export interface IChangeModalState extends Action {
     payload: {
         state: ModalState,
         purchaseId?: string
+        replacementFor?: string
     }
 }
