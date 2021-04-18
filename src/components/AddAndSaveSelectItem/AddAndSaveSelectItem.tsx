@@ -5,7 +5,7 @@ import {AddButton} from "../AddButton/AddButton";
 
 const {Option} = Select;
 
-class AddingSelect extends React.Component<IAddingSelectProps, IAddingSelectState> {
+class AddAndSaveSelectItem extends React.Component<IAddingSelectProps, IAddingSelectState> {
     constructor(props: IAddingSelectProps) {
         super(props);
         this.state = {
@@ -44,9 +44,9 @@ class AddingSelect extends React.Component<IAddingSelectProps, IAddingSelectStat
                 getPopupContainer={trigger => trigger.parentNode}
                 onSearch={this.onInputChange}
                 filterOption={(input, option) =>
-                    option?.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                    option?.children.toLowerCase().includes(input.toLowerCase())
                 }
-                //TODO исправить баг селекта
+
                 dropdownRender={menu => (
                     <div>
                         {menu}
@@ -65,4 +65,4 @@ class AddingSelect extends React.Component<IAddingSelectProps, IAddingSelectStat
     }
 }
 
-export default AddingSelect;
+export default AddAndSaveSelectItem;

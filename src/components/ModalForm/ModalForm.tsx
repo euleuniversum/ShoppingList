@@ -1,6 +1,6 @@
 import {Form, FormInstance, Input, InputNumber, Modal, Select} from "antd";
 import React from "react";
-import AddingSelectContainer from "../../containers/AddingSelectContainer";
+import AddingSelectContainer from "../../containers/AddAndSaveSelectItemContainer";
 import {IFormValues, IModalFormProps, IModalFormState} from "../../interface";
 import {getPriceUnit, QuantityUnit, Unit} from "../../units";
 
@@ -56,7 +56,7 @@ class ModalForm extends React.Component<IModalFormProps, IModalFormState> {
     }
 
     getUnitOptions(units: Unit[]) {
-        let options: JSX.Element[] = [];
+        let options: React.ReactNode[] = [];
         units.map(unit => {
             options.push(<Option key={unit} value={unit}>{unit}</Option>)
         });
