@@ -5,13 +5,13 @@ import {
     IDeletePurchaseAction,
     IEditPurchaseAction
 } from "../actionTypes/interface";
-import uniqid from 'uniqid';
+import { nanoid } from 'nanoid';
 import {IFormValues, ModalState} from "../interface";
 
 export const addPurchaseAction = (formValues: IFormValues): IAddPurchaseAction => ({
     type: actionTypes.ADD_PURCHASE,
     payload: {
-        id: uniqid(),
+        id: nanoid(),
         isEdited: false,
         creationDate: new Date(),
         ...formValues
