@@ -1,4 +1,3 @@
-import React from "react";
 import {SelectProps} from "antd";
 import {Unit} from "./units";
 
@@ -87,12 +86,6 @@ export interface IAddingSelectProps extends SelectProps<string> {
 export interface IAddingSelectState {
     inputValue: string,
     newItem: string,
-}
-
-export interface AddButtonProps {
-    menu: React.ReactElement,
-    text: string,
-    onClick: () => void
 }
 
 export interface IDateValueProps {

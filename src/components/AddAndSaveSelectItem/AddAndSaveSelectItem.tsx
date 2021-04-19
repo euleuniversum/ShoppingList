@@ -51,10 +51,8 @@ class AddAndSaveSelectItem extends React.Component<IAddingSelectProps, IAddingSe
                     <div>
                         {menu}
                         <AddButton
-                            menu={menu}
-                            text={addButtonText}
                             onClick={this.addItem}
-                        />
+                        >{addButtonText}</AddButton>
                     </div>
                 )}>
                 {[newItem, ...items].filter(Boolean).map(item => (
