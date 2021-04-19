@@ -47,6 +47,7 @@ const changeModal = (state: IPurchasesStore, action: IChangeModalState) : IPurch
     const { purchasesIds, purchasesById } = state;
 
     if (purchaseId) {
+
         for (let key in purchasesById) {
             purchasesById[key] = {
                 ...purchasesById[key],
@@ -63,11 +64,10 @@ const changeModal = (state: IPurchasesStore, action: IChangeModalState) : IPurch
                 }
             }
         }
-    } else {
-        return {
-            purchasesIds: purchasesIds,
-            purchasesById: purchasesById
-        }
+    }
+    return {
+        purchasesIds: purchasesIds,
+        purchasesById: purchasesById
     }
 }
 

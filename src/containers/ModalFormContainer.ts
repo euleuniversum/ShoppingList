@@ -23,7 +23,6 @@ const getModalProps = (modalStore: IModalStore, purchaseValues: IPurchaseItem | 
                 }
             }
         case ModalState.EDIT: {
-            console.log(purchaseValues)
             if (purchaseValues) {
                 return {
                     title: 'Редактировать элемент',

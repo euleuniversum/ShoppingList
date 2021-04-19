@@ -1,7 +1,7 @@
 import React from "react";
 import {IPriceCellProps} from "../../interface";
 import {Space, Typography} from "antd";
-import { convertUnits, getTotalPriceElement } from "../../units";
+import { getTotalPriceElement } from "../../units";
 
 const {Text} = Typography;
 

@@ -18,7 +18,7 @@ export const ShoppingTable = ({purchases, onAddReplacement, onEditItem, onDelete
                 onEditItem,
                 onDeleteItem
             ),
-        [purchases, onEditItem, onDeleteItem]);
+        [purchases, onEditItem, onDeleteItem, onAddReplacement]);
 
     const data: IShoppingTableRow[] = purchases
         .filter(purchase => !purchase.replacementFor)
