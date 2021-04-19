@@ -49,8 +49,11 @@ export interface IPurchaseItem extends IFormValues {
     isEdited: boolean,
 }
 
-export interface IPurchasesStore extends Array<IPurchaseItem> {
-
+export interface IPurchasesStore {
+    purchasesIds: string[],
+    purchasesById: {
+        [id: string]: IPurchaseItem
+    }
 }
 
 export interface IShoppingTableProps {

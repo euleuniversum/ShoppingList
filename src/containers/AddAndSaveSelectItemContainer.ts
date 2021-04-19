@@ -5,6 +5,6 @@ import {IRootStore} from "../interface";
 
 export default connect(
     (state: IRootStore) => ({
-        items: clearArray(state.purchases.map(purchase => purchase.whereBuy))
+        items: clearArray(Object.values(state.purchases.purchasesById).map(purchase => purchase.whereBuy))
     })
 )(AddAndSaveSelectItem)

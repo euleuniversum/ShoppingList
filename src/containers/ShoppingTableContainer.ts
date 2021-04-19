@@ -5,7 +5,7 @@ import {IRootStore, ModalState} from "../interface";
 
 export default connect(
     (state: IRootStore) => ({
-        purchases: state.purchases
+        purchases: Object.values(state.purchases.purchasesById)
     }),
     (dispatch) => ({
         onAddReplacement: (replacementFor: string) => dispatch(changeModalState(ModalState.CREATE, undefined, replacementFor)),
