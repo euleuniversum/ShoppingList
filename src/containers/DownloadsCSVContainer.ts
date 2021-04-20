@@ -1,9 +1,10 @@
 import {connect} from "react-redux";
 import {DownloadCSV} from "../components/DownloadCSV/DownloadCSV";
-import {IFormValues, IPurchaseItem, IRootStore} from "../interface";
+import {IFormValues, IPurchaseItem, IRootStore, IShoppingTableRow} from "../interface";
 
 function getHeaders() {
     return [
+        { label: "ID", key: "id" },
         { label: "Название", key: "title" },
         { label: "Количество", key: "quantity" },
         { label: "Единица измерения", key: "quantityUnit" },
@@ -15,7 +16,7 @@ function getHeaders() {
 }
 
 function getData(sortedIds: string[], purchasesById: { [id: string]: IPurchaseItem }) {
-    const data: IFormValues[] = [];
+    const data: IPurchaseItem[] = [];
     for (const id of sortedIds) {
         data.push(purchasesById[id]);
     }

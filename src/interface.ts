@@ -107,7 +107,7 @@ export interface IDownloadCSVProps {
         label: string,
         key: string
     }[]
-    data: IFormValues[],
+    data: IPurchaseItem[],
     text: string,
     filename: string
 }
