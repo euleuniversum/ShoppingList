@@ -9,14 +9,14 @@ import {calcCenteredGrid} from '../../helpers/app';
 import {changeModalState} from "../../actionCreators";
 import ModalFormContainer from "../../containers/ModalFormContainer";
 import ShoppingTableContainer from '../../containers/ShoppingTableContainer';
-import DownloadsCSVContainer from '../../containers/DownloadsCSVContainer';
+import DownloadsTableCSVContainer from '../../containers/DownloadsTableCSVContainer';
 import {store} from '../../store';
 import {ModalState} from "../../interface";
 
 const {Header, Content} = Layout;
 
 const grid = {
-    xxl: calcCenteredGrid(20),
+    xxl: calcCenteredGrid(2),
     ...calcCenteredGrid(24),
 }
 
@@ -32,9 +32,13 @@ const App = () => {
             <Layout className={styles.app}>
                 <Header>
                     <Row>
-                        <Col {...grid}>
+                        <Col span={4}>
                             <Button type={'primary'} onClick={onCreate}>Добавить элемент</Button>
-                            <DownloadsCSVContainer />
+
+                        </Col>
+                        <Col span={4}>
+
+                            <DownloadsTableCSVContainer />
                         </Col>
                     </Row>
                 </Header>

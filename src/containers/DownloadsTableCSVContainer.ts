@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import {DownloadCSV} from "../components/DownloadCSV/DownloadCSV";
-import {IFormValues, IPurchaseItem, IRootStore, IShoppingTableRow} from "../interface";
+import { IPurchaseItem, IRootStore} from "../interface";
 
 function getHeaders() {
     return [
@@ -17,9 +17,7 @@ function getHeaders() {
 
 function getData(sortedIds: string[], purchasesById: { [id: string]: IPurchaseItem }) {
     const data: IPurchaseItem[] = [];
-    for (const id of sortedIds) {
-        data.push(purchasesById[id]);
-    }
+    sortedIds.forEach(id => data.push(purchasesById[id]));
     return data;
 }
 

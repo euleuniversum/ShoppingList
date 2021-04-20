@@ -5,7 +5,7 @@ import {IDownloadCSVProps} from "../../interface";
 export const DownloadCSV = ({headers, data, text, filename} : IDownloadCSVProps) => {
     return (
         <>
-            <CSVLink data={data} headers={headers} filename={filename}>{text}</CSVLink>
+            <CSVLink data={data} headers={headers} filename={filename} >{text}</CSVLink>
         </>
     );
 }
