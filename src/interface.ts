@@ -101,3 +101,13 @@ export interface IUnitConformity {
     name: Unit,
     ratio: number,
 }
+
+export interface IDownloadCSVProps {
+    headers: {
+        label: string,
+        key: string
+    }[]
+    data: IFormValues[],
+    text: string,
+    filename: string
+}

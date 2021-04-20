@@ -9,6 +9,7 @@ import {calcCenteredGrid} from '../../helpers/app';
 import {changeModalState} from "../../actionCreators";
 import ModalFormContainer from "../../containers/ModalFormContainer";
 import ShoppingTableContainer from '../../containers/ShoppingTableContainer';
+import DownloadsCSVContainer from '../../containers/DownloadsCSVContainer';
 import {store} from '../../store';
 import {ModalState} from "../../interface";
 
@@ -33,6 +34,7 @@ const App = () => {
                     <Row>
                         <Col {...grid}>
                             <Button type={'primary'} onClick={onCreate}>Добавить элемент</Button>
+                            <DownloadsCSVContainer />
                         </Col>
                     </Row>
                 </Header>
