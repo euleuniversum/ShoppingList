@@ -10,7 +10,7 @@ function getHeaders() {
         { label: "Примерная цена", key: "price" },
         { label: "Единица измерения цены", key: "priceUnit" },
         { label: "Где купить", key: "whereBuy" },
-        //{ label: "Список замен", key: "replacementFor" },
+        { label: "Список замен", key: "replacementFor" },
     ];
 }
 
