@@ -35,7 +35,13 @@ export const ShoppingTable = ({purchases, onAddReplacement, onEditItem, onDelete
 
     const onChange = (pagination: any, filters: any, sorter: any, extra: any) => {
         const currentData: IShoppingTableRow[] = extra.currentDataSource;
-        const currentIds: string[] = currentData.map(purchase => purchase.key)
+        let currentIds: string[] = [];
+
+        for (const purchase of currentData) {
+            currentIds.push(purchase.key)
+            purchase.children?.forEach(replacement => currentIds.push(replacement.key));
+        }
+
         onSortItem(currentIds);
 
         console.log('params', pagination, filters, sorter, extra);
