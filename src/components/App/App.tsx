@@ -16,7 +16,7 @@ import {ModalState} from "../../interface";
 const {Header, Content} = Layout;
 
 const grid = {
-    xxl: calcCenteredGrid(2),
+    xxl: calcCenteredGrid(20),
     ...calcCenteredGrid(24),
 }
 

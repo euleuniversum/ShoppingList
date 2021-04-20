@@ -4,9 +4,8 @@ import { IPurchaseItem, IRootStore} from "../interface";
 
 function getHeaders() {
     return [
-        { label: "ID", key: "id" },
-        { label: "Замена для", key: "replacementFor" },
         { label: "Название", key: "title" },
+        { label: "Замена для", key: "replacementFor" },
         { label: "Количество", key: "quantity" },
         { label: "Единица измерения", key: "quantityUnit" },
         { label: "Примерная цена", key: "price" },
@@ -17,7 +16,15 @@ function getHeaders() {
 
 function getData(sortedIds: string[], purchasesById: { [id: string]: IPurchaseItem }) {
     const data: IPurchaseItem[] = [];
-    sortedIds.forEach(id => data.push(purchasesById[id]));
+    sortedIds.forEach(id => {
+        const purchase = {
+            ...purchasesById[id]
+        };
+        if (purchase.replacementFor) {
+            purchase.replacementFor = purchasesById[purchase.replacementFor]?.title;
+        }
+        return data.push(purchase)
+    });
     return data;
 }
 
