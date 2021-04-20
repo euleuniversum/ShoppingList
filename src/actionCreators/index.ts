@@ -3,7 +3,7 @@ import {
     IAddPurchaseAction,
     IChangeModalState,
     IDeletePurchaseAction,
-    IEditPurchaseAction
+    IEditPurchaseAction, IUpdateIdsInTableState
 } from "../actionTypes/interface";
 import { nanoid } from 'nanoid';
 import {IFormValues, ModalState} from "../interface";
@@ -38,4 +38,9 @@ export const changeModalState = (state: ModalState, purchaseId?: string, replace
         purchaseId,
         replacementFor
     }
+});
+
+export const updateIdsInTableState = (ids: string[]): IUpdateIdsInTableState => ({
+    type: actionTypes.UPDATE_IDS_IN_TABLE_STATE,
+    payload: ids
 });

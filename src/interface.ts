@@ -49,7 +49,7 @@ export interface IPurchaseItem extends IFormValues {
 }
 
 export interface IPurchasesStore {
-    purchasesIds: string[],
+    sortedPurchasesIds: string[],
     purchasesById: {
         [id: string]: IPurchaseItem
     }
@@ -60,6 +60,7 @@ export interface IShoppingTableProps {
     onAddReplacement: (id: string) => void,
     onEditItem: (id: string) => void,
     onDeleteItem: (id: string) => void,
+    onSortItem: (ids: string[]) => void,
 }
 
 export interface IShoppingTableRow extends IFormValues {

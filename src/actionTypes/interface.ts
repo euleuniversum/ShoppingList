@@ -25,3 +25,8 @@ export interface IChangeModalState extends Action {
         replacementFor?: string
     }
 }
+
+export interface IUpdateIdsInTableState extends Action {
+    type: typeof actionTypes.UPDATE_IDS_IN_TABLE_STATE
+    payload: string[]
+}

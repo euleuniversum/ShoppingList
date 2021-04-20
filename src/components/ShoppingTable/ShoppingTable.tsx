@@ -6,7 +6,7 @@ import {IShoppingTableProps, IShoppingTableRow} from "../../interface";
 import {useMemo} from "react";
 import {getTotalPriceElement} from "../../units";
 
-export const ShoppingTable = ({purchases, onAddReplacement, onEditItem, onDeleteItem}: IShoppingTableProps) => {
+export const ShoppingTable = ({purchases, onAddReplacement, onEditItem, onDeleteItem, onSortItem}: IShoppingTableProps) => {
     const columns = useMemo(() =>
             getColumns(
                 clearArray(
@@ -16,7 +16,7 @@ export const ShoppingTable = ({purchases, onAddReplacement, onEditItem, onDelete
                 ),
                 onAddReplacement,
                 onEditItem,
-                onDeleteItem
+                onDeleteItem,
             ),
         [purchases, onEditItem, onDeleteItem, onAddReplacement]);
 
@@ -34,6 +34,10 @@ export const ShoppingTable = ({purchases, onAddReplacement, onEditItem, onDelete
         });
 
     const onChange = (pagination: any, filters: any, sorter: any, extra: any) => {
+        const currentData: Array<IShoppingTableRow> = extra.currentDataSource;
+        const currentIds: string[] = currentData.map(purchase => purchase.key)
+        onSortItem(currentIds);
+
         console.log('params', pagination, filters, sorter, extra);
     }
 
