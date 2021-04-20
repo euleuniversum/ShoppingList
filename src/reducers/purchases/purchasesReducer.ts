@@ -22,15 +22,18 @@ const addPurchase = (state: IPurchasesStore, action: IAddPurchaseAction): IPurch
 );
 
 const editPurchase = (state: IPurchasesStore, action: IEditPurchaseAction) : IPurchasesStore => {
+    const { sortedPurchasesIds, purchasesById } = state;
     const purchase = action.payload;
+
     return {
-        sortedPurchasesIds: state.sortedPurchasesIds,
+        sortedPurchasesIds,
         purchasesById: {
-            ...state.purchasesById,
+            ...purchasesById,
             [purchase.id]: {
-                ...state.purchasesById[purchase.id],
+                ...purchasesById[purchase.id],
+                ...purchase,
                 isEdited: false,
-                ...purchase
+                replacementFor: purchasesById[purchase.id].replacementFor
             }
         }
     }
