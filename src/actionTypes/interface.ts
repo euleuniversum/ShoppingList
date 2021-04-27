@@ -30,3 +30,11 @@ export interface IUpdateIdsInTableState extends Action {
     type: typeof actionTypes.UPDATE_IDS_IN_TABLE_STATE
     payload: string[]
 }
+
+export interface IChangePurchased extends Action {
+    type: typeof actionTypes.CHANGE_PURCHASED
+    payload: {
+        ids: string[],
+        isPurchased: boolean
+    }
+}

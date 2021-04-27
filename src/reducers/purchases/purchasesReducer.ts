@@ -2,14 +2,20 @@ import {createReducer} from "redux-create-reducer";
 import * as actionTypes from '../../actionTypes';
 import {
     IAddPurchaseAction,
-    IChangeModalState,
+    IChangeModalState, IChangePurchased,
     IDeletePurchaseAction,
     IEditPurchaseAction,
     IUpdateIdsInTableState
 } from "../../actionTypes/interface";
-import { IPurchasesStore} from "../../interface";
+import {IPurchasesStore} from "../../interface";
 
-type PurchaseActions = IAddPurchaseAction | IDeletePurchaseAction | IChangeModalState | IEditPurchaseAction | IUpdateIdsInTableState;
+type PurchaseActions =
+    IAddPurchaseAction
+    | IDeletePurchaseAction
+    | IChangeModalState
+    | IEditPurchaseAction
+    | IUpdateIdsInTableState
+    | IChangePurchased;
 
 const addPurchase = (state: IPurchasesStore, action: IAddPurchaseAction): IPurchasesStore => (
     {
@@ -21,8 +27,8 @@ const addPurchase = (state: IPurchasesStore, action: IAddPurchaseAction): IPurch
     }
 );
 
-const editPurchase = (state: IPurchasesStore, action: IEditPurchaseAction) : IPurchasesStore => {
-    const { sortedPurchasesIds, purchasesById } = state;
+const editPurchase = (state: IPurchasesStore, action: IEditPurchaseAction): IPurchasesStore => {
+    const {sortedPurchasesIds, purchasesById} = state;
     const purchase = action.payload;
 
     return {
@@ -39,7 +45,7 @@ const editPurchase = (state: IPurchasesStore, action: IEditPurchaseAction) : IPu
     }
 };
 
-const deletePurchase = (state: IPurchasesStore, action: IDeletePurchaseAction) : IPurchasesStore => {
+const deletePurchase = (state: IPurchasesStore, action: IDeletePurchaseAction): IPurchasesStore => {
     const newPurchasesIds = [...state.sortedPurchasesIds.filter(id => id !== action.payload)];
     const newPurchasesById = {
         ...state.purchasesById
@@ -51,9 +57,9 @@ const deletePurchase = (state: IPurchasesStore, action: IDeletePurchaseAction) :
     }
 };
 
-const changeModal = (state: IPurchasesStore, action: IChangeModalState) : IPurchasesStore => {
-    const { purchaseId } = action.payload;
-    const { sortedPurchasesIds, purchasesById } = state;
+const changeModal = (state: IPurchasesStore, action: IChangeModalState): IPurchasesStore => {
+    const {purchaseId} = action.payload;
+    const {sortedPurchasesIds, purchasesById} = state;
 
     if (purchaseId) {
 
@@ -89,13 +95,31 @@ const updateIdsInTable = (state: IPurchasesStore, action: IUpdateIdsInTableState
     }
 );
 
+const changePurchased = (state: IPurchasesStore, action: IChangePurchased): IPurchasesStore => {
+    const {sortedPurchasesIds, purchasesById} = state;
+    const {ids, isPurchased} = action.payload;
+
+    ids.forEach((id) => {
+        purchasesById[id] = {
+            ...purchasesById[id],
+            isPurchased
+        }
+    });
+
+    return ({
+        sortedPurchasesIds,
+        purchasesById,
+    });
+};
+
 export const purchases = createReducer<IPurchasesStore, PurchaseActions>({
-        sortedPurchasesIds: [],
-        purchasesById: {}
-    }, {
+    sortedPurchasesIds: [],
+    purchasesById: {}
+}, {
     [actionTypes.ADD_PURCHASE]: addPurchase,
     [actionTypes.DELETE_PURCHASE]: deletePurchase,
     [actionTypes.CHANGE_MODAL_STATE]: changeModal,
     [actionTypes.EDIT_PURCHASE]: editPurchase,
-    [actionTypes.UPDATE_IDS_IN_TABLE_STATE]: updateIdsInTable
+    [actionTypes.UPDATE_IDS_IN_TABLE_STATE]: updateIdsInTable,
+    [actionTypes.CHANGE_PURCHASED]: changePurchased
 })

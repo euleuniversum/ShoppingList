@@ -6,7 +6,7 @@ import {IShoppingTableProps, IShoppingTableRow} from "../../interface";
 import {useMemo} from "react";
 import {getTotalPriceElement} from "../../units";
 
-export const ShoppingTable = ({purchases, onAddReplacement, onEditItem, onDeleteItem, onSortItem}: IShoppingTableProps) => {
+export const ShoppingTable = ({purchases, onAddReplacement, onEditItem, onDeleteItem, onSortItem, onChangePurchased}: IShoppingTableProps) => {
     const columns = useMemo(() =>
             getColumns(
                 clearArray(
@@ -47,8 +47,32 @@ export const ShoppingTable = ({purchases, onAddReplacement, onEditItem, onDelete
         console.log('params', pagination, filters, sorter, extra);
     }
 
+    const rowSelection = {
+        checkStrictly: false,
+        onSelect: (record: IShoppingTableRow, selected: boolean, selectedRows: IShoppingTableRow[], nativeEvent: any) => {
+            let idsForChanges = [record.key];
+            record.children?.forEach((purchases) => idsForChanges.push(purchases.key));
+
+            onChangePurchased(idsForChanges, selected);
+            console.log(record, selected, selectedRows);
+        },
+
+        onSelectAll: (selected: boolean, selectedRows: IShoppingTableRow[], changeRows: IShoppingTableRow[]) => {
+            let idsForChanges = [];
+            for (const row of changeRows) {
+                idsForChanges.push(row.key);
+                row.children?.forEach((child) => idsForChanges.push(child.key));
+            }
+            onChangePurchased(idsForChanges, selected);
+            console.log(selected, selectedRows, changeRows);
+        }
+    };
+
     return (
         <Table
+            rowSelection={{
+                ...rowSelection
+            }}
             columns={columns}
             dataSource={data}
             onChange={onChange}
@@ -63,7 +87,7 @@ export const ShoppingTable = ({purchases, onAddReplacement, onEditItem, onDelete
                     <>
                         <Table.Summary.Row className={styles.tfoot_th}>
                             <Table.Summary.Cell className={styles.tfoot_td} index={1} colSpan={2}>Итого:</Table.Summary.Cell>
-                            <Table.Summary.Cell className={styles.tfoot_td} index={2} colSpan={4}>
+                            <Table.Summary.Cell className={styles.tfoot_td} index={2} colSpan={5}>
                                 {totalPrice}р
                             </Table.Summary.Cell>
                         </Table.Summary.Row>

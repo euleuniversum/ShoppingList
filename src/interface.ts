@@ -46,6 +46,7 @@ export interface IPurchaseItem extends IFormValues {
     id: string,
     creationDate: Date,
     isEdited: boolean,
+    isPurchased: boolean,
 }
 
 export interface IPurchasesStore {
@@ -61,6 +62,7 @@ export interface IShoppingTableProps {
     onEditItem: (id: string) => void,
     onDeleteItem: (id: string) => void,
     onSortItem: (ids: string[]) => void,
+    onChangePurchased: (ids: string[], isPurchased: boolean) => void,
 }
 
 export interface IShoppingTableRow extends IFormValues {

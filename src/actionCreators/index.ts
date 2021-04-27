@@ -1,7 +1,7 @@
 import * as actionTypes from '../actionTypes';
 import {
     IAddPurchaseAction,
-    IChangeModalState,
+    IChangeModalState, IChangePurchased,
     IDeletePurchaseAction,
     IEditPurchaseAction, IUpdateIdsInTableState
 } from "../actionTypes/interface";
@@ -13,6 +13,7 @@ export const addPurchaseAction = (formValues: IFormValues): IAddPurchaseAction =
     payload: {
         id: nanoid(),
         isEdited: false,
+        isPurchased: false,
         creationDate: new Date(),
         ...formValues
     },
@@ -43,4 +44,12 @@ export const changeModalState = (state: ModalState, purchaseId?: string, replace
 export const updateIdsInTableState = (ids: string[]): IUpdateIdsInTableState => ({
     type: actionTypes.UPDATE_IDS_IN_TABLE_STATE,
     payload: ids
+});
+
+export const changePurchased = (ids: string[], isPurchased: boolean): IChangePurchased => ({
+    type: actionTypes.CHANGE_PURCHASED,
+    payload: {
+        ids,
+        isPurchased
+    }
 });
