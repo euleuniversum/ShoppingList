@@ -3,7 +3,7 @@ import styles from './ShoppingTable.module.css';
 import {getColumns} from "./columns";
 import {clearArray} from '../../helpers/app';
 import {IPurchaseItem, IShoppingTableProps, IShoppingTableRow, ListNames} from "../../interface";
-import React, {useMemo} from "react";
+import React from "react";
 import {getTotalPriceElement} from "../../units";
 
 const {TabPane} = Tabs;
@@ -18,32 +18,31 @@ export const ShoppingTable = ({
                                   onChangeListName
                               }: IShoppingTableProps) => {
 
-    const columnsSL = useMemo(() =>
-            getColumns(
+    const columnsShoppingList = getColumns(
                 clearArray(
                     shoppingList
                         .filter(purchase => !purchase.replacementFor)
                         .map(purchase => purchase.whereBuy)
                 ),
+                ListNames.PURCHASED,
                 onAddReplacement,
                 onEditItem,
                 onDeleteItem,
-            ),
-        [shoppingList, onEditItem, onDeleteItem, onAddReplacement]);
+                onChangeListName,
+            );
 
-    const columnsPL = useMemo(() =>
-            getColumns(
+    const columnsPurchasedList = getColumns(
                 clearArray(
                     purchasedList
                         .filter(purchase => !purchase.replacementFor)
                         .map(purchase => purchase.whereBuy)
                 ),
+                ListNames.SHOPPING,
                 onAddReplacement,
                 onEditItem,
                 onDeleteItem,
-            ),
-        [purchasedList, onEditItem, onDeleteItem, onAddReplacement]);
-
+                onChangeListName
+            );
 
     const getDataList = (purchases: IPurchaseItem[]): IShoppingTableRow[] => {
         const getChildrenList = (purchase: IPurchaseItem) => {
@@ -54,7 +53,7 @@ export const ShoppingTable = ({
 
         const purchasesFiltered = purchases.filter(purchase => !purchase.replacementFor);
 
-        const purchaseList = purchasesFiltered.map((purchase) => {
+        return purchasesFiltered.map((purchase) => {
             const purchaseObject: IShoppingTableRow = {key: purchase.id, ...purchase};
 
             const childrenList = getChildrenList(purchase);
@@ -62,8 +61,6 @@ export const ShoppingTable = ({
 
             return purchaseObject;
         });
-        console.log('getDataList', purchaseList);
-        return purchaseList;
     }
 
     const onChange = (pagination: any, filters: any, sorter: any, extra: any) => {
@@ -77,25 +74,11 @@ export const ShoppingTable = ({
         onSortItem(currentIds);
     }
 
-    const getRowSelection = (to: ListNames) => {
-        return {
-            checkStrictly: false,
-            columnWidth: '30px',
-            onChange: (selectedRowKeys: any, selectedRows: IShoppingTableRow[]) => {
-                onChangeListName(selectedRowKeys, to);
-                console.log(selectedRowKeys, selectedRows);
-            }
-        }
-    };
-
     return (
         <Tabs type="card">
             <TabPane tab="Список покупок" key="1">
                 <Table
-                    rowSelection={{
-                        ...getRowSelection(ListNames.PURCHASED)
-                    }}
-                    columns={columnsSL}
+                    columns={columnsShoppingList}
                     dataSource={getDataList(shoppingList)}
                     onChange={onChange}
                     pagination={false}
@@ -112,7 +95,7 @@ export const ShoppingTable = ({
                                 <Table.Summary.Row className={styles.tfoot_th}>
                                     <Table.Summary.Cell className={styles.tfoot_td} index={1}
                                                         colSpan={2}>Итого:</Table.Summary.Cell>
-                                    <Table.Summary.Cell className={styles.tfoot_td} index={2} colSpan={5}>
+                                    <Table.Summary.Cell className={styles.tfoot_td} index={2} colSpan={4}>
                                         {totalPrice}р
                                     </Table.Summary.Cell>
                                 </Table.Summary.Row>
@@ -123,10 +106,7 @@ export const ShoppingTable = ({
             </TabPane>
             <TabPane tab="Куплено" key="2">
                 <Table
-                    rowSelection={{
-                        ...getRowSelection(ListNames.SHOPPING)
-                    }}
-                    columns={columnsPL}
+                    columns={columnsPurchasedList}
                     dataSource={getDataList(purchasedList)}
                     onChange={onChange}
                     pagination={false}

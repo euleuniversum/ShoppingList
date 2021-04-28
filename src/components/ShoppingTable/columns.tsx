@@ -1,5 +1,5 @@
 import {ColumnsType} from "antd/lib/table/interface";
-import {IShoppingTableRow} from "../../interface";
+import {IShoppingTableRow, ListNames} from "../../interface";
 import {DateValue} from "../DateValue/DateValue";
 import {ElementActions} from "../ElementActions/ElementActions";
 import PriceCell from "../PriceCell/PriceCell";
@@ -9,10 +9,11 @@ const setDataIndex = (value: keyof IShoppingTableRow): keyof IShoppingTableRow =
 
 export function getColumns(
     filterValues: string[],
+    toListName: ListNames,
     onAddReplacement: (id: string) => void,
     onEdit: (id: string) => void,
-    onDelete: (id: string) => void): ColumnsType<IShoppingTableRow>
-{
+    onDelete: (id: string) => void,
+    onChangeListName: (ids: string[], listName: ListNames) => void): ColumnsType<IShoppingTableRow> {
     return [
         {
             title: 'Название',
@@ -60,11 +61,15 @@ export function getColumns(
             render: (text, purchase) => (
                 <ElementActions
                     id={purchase.key}
+                    childrenIds={purchase.children?.map(item => item.key) || []}
+                    toListName={toListName}
                     title={purchase.title}
-                    showReplacementButton={!purchase.replacementFor}
+                    showChangeListButton={!purchase.replacementFor}
+                    showReplacementButton={!(purchase.replacementFor || toListName === ListNames.SHOPPING)}
                     onAddReplacement={onAddReplacement}
                     onEdit={onEdit}
                     onDelete={onDelete}
+                    onChangeListName={onChangeListName}
                 />
             ),
         }

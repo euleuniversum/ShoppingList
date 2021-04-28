@@ -79,11 +79,15 @@ export interface IShoppingTableRow extends IFormValues {
 
 export interface IElementActionsProps {
     id: string,
+    childrenIds: string[],
+    toListName: ListNames,
     title: string,
+    showChangeListButton: boolean,
     showReplacementButton: boolean,
     onAddReplacement: (id: string) => void,
     onEdit: (id: string) => void,
-    onDelete: (id: string) => void
+    onDelete: (id: string) => void,
+    onChangeListName: (ids: string[], listName: ListNames) => void,
 }
 
 export interface IAddingSelectProps extends SelectProps<string> {
