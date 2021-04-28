@@ -20,6 +20,12 @@ const grid = {
     ...calcCenteredGrid(24),
 }
 
+const spanForHeaderRow = {
+    xs: {flex: "auto", offset: 1},
+    sm: {flex: "auto", offset: 1},
+
+}
+
 moment.locale('ru');
 
 const App = () => {
@@ -32,13 +38,11 @@ const App = () => {
             <Layout className={styles.app}>
                 <Header>
                     <Row>
-                        <Col span={4}>
+                        <Col {...spanForHeaderRow}>
                             <Button type={'primary'} onClick={onCreate}>Добавить элемент</Button>
-
                         </Col>
-                        <Col span={4}>
-
-                            <DownloadsTableCSVContainer />
+                        <Col {...spanForHeaderRow}>
+                            <DownloadsTableCSVContainer/>
                         </Col>
                     </Row>
                 </Header>

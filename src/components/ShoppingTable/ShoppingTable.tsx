@@ -99,7 +99,8 @@ export const ShoppingTable = ({
                     dataSource={getDataList(shoppingList)}
                     onChange={onChange}
                     pagination={false}
-                    scroll={{x: 1000}} sticky
+                    scroll={{x: 1000}}
+                    sticky
                     summary={pageData => {
                         let totalPrice = 0;
                         pageData.forEach((purchase) => {
@@ -129,7 +130,8 @@ export const ShoppingTable = ({
                     dataSource={getDataList(purchasedList)}
                     onChange={onChange}
                     pagination={false}
-                    scroll={{x: 1000}} sticky
+                    scroll={{x: 1000}}
+                    sticky
                 />
             </TabPane>
         </Tabs>
