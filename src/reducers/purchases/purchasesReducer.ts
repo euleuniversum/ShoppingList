@@ -2,7 +2,7 @@ import {createReducer} from "redux-create-reducer";
 import * as actionTypes from '../../actionTypes';
 import {
     IAddPurchaseAction,
-    IChangeModalState, IChangePurchased,
+    IChangeModalState, IChangeListName,
     IDeletePurchaseAction,
     IEditPurchaseAction,
     IUpdateIdsInTableState
@@ -15,7 +15,7 @@ type PurchaseActions =
     | IChangeModalState
     | IEditPurchaseAction
     | IUpdateIdsInTableState
-    | IChangePurchased;
+    | IChangeListName;
 
 const addPurchase = (state: IPurchasesStore, action: IAddPurchaseAction): IPurchasesStore => (
     {
@@ -95,14 +95,14 @@ const updateIdsInTable = (state: IPurchasesStore, action: IUpdateIdsInTableState
     }
 );
 
-const changePurchased = (state: IPurchasesStore, action: IChangePurchased): IPurchasesStore => {
+const changeListName = (state: IPurchasesStore, action: IChangeListName): IPurchasesStore => {
     const {sortedPurchasesIds, purchasesById} = state;
-    const {ids, isPurchased} = action.payload;
+    const {ids, listName} = action.payload;
 
     ids.forEach((id) => {
         purchasesById[id] = {
             ...purchasesById[id],
-            isPurchased
+            listName
         }
     });
 
@@ -121,5 +121,5 @@ export const purchases = createReducer<IPurchasesStore, PurchaseActions>({
     [actionTypes.CHANGE_MODAL_STATE]: changeModal,
     [actionTypes.EDIT_PURCHASE]: editPurchase,
     [actionTypes.UPDATE_IDS_IN_TABLE_STATE]: updateIdsInTable,
-    [actionTypes.CHANGE_PURCHASED]: changePurchased
+    [actionTypes.CHANGE_LIST_NAME]: changeListName
 })

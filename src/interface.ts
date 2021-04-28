@@ -42,11 +42,16 @@ export interface IModalFormState {
     quantityUnit: Unit,
 }
 
+export enum ListNames {
+    SHOPPING = 'ShoppingList',
+    PURCHASED = 'PurchasedList',
+}
+
 export interface IPurchaseItem extends IFormValues {
     id: string,
     creationDate: Date,
     isEdited: boolean,
-    isPurchased: boolean,
+    listName: ListNames,
 }
 
 export interface IPurchasesStore {
@@ -57,12 +62,13 @@ export interface IPurchasesStore {
 }
 
 export interface IShoppingTableProps {
-    purchases: IPurchaseItem[],
+    shoppingList: IPurchaseItem[],
+    purchasedList: IPurchaseItem[],
     onAddReplacement: (id: string) => void,
     onEditItem: (id: string) => void,
     onDeleteItem: (id: string) => void,
     onSortItem: (ids: string[]) => void,
-    onChangePurchased: (ids: string[], isPurchased: boolean) => void,
+    onChangeListName: (ids: string[], listName: ListNames) => void,
 }
 
 export interface IShoppingTableRow extends IFormValues {

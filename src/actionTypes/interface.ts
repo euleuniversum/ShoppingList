@@ -1,6 +1,6 @@
 import {Action} from 'redux';
 import * as actionTypes from './index';
-import {IFormValues, ModalState, IPurchaseItem} from "../interface";
+import {IFormValues, ModalState, IPurchaseItem, ListNames} from "../interface";
 
 export interface IAddPurchaseAction extends Action {
     type: typeof actionTypes.ADD_PURCHASE,
@@ -31,10 +31,10 @@ export interface IUpdateIdsInTableState extends Action {
     payload: string[]
 }
 
-export interface IChangePurchased extends Action {
-    type: typeof actionTypes.CHANGE_PURCHASED
+export interface IChangeListName extends Action {
+    type: typeof actionTypes.CHANGE_LIST_NAME
     payload: {
         ids: string[],
-        isPurchased: boolean
+        listName: ListNames
     }
 }
