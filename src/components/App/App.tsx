@@ -21,9 +21,7 @@ const grid = {
 }
 
 const spanForHeaderRow = {
-    xs: {flex: "auto", offset: 1},
     sm: {flex: "auto", offset: 1},
-
 }
 
 moment.locale('ru');
@@ -36,10 +34,10 @@ const App = () => {
     return (
         <Provider store={store}>
             <Layout className={styles.app}>
-                <Header>
+                <Header className={styles.header}>
                     <Row>
                         <Col {...spanForHeaderRow}>
-                            <Button type={'primary'} onClick={onCreate}>Добавить элемент</Button>
+                            <Button className={styles.btnAdd} type={'primary'} onClick={onCreate}>Добавить элемент</Button>
                         </Col>
                         <Col {...spanForHeaderRow}>
                             <DownloadsTableCSVContainer/>
