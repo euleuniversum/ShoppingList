@@ -41,7 +41,7 @@ export const ElementActions = ({
                     />
                 </Tooltip>
             ) : null}
-            <Tooltip placement="left" title={'Редактировать'}>
+            <Tooltip placement="top" title={'Редактировать'}>
                 <Button
                     icon={<EditOutlined/>}
                     onClick={() => onEdit(id)}
