@@ -1,4 +1,4 @@
-import {Table, Tabs} from 'antd';
+import {Empty, Table, Tabs} from 'antd';
 import styles from './ShoppingTable.module.css';
 import {getColumns} from "./columns";
 import {clearArray} from '../../helpers/app';
@@ -19,30 +19,30 @@ export const ShoppingTable = ({
                               }: IShoppingTableProps) => {
 
     const columnsShoppingList = getColumns(
-                clearArray(
-                    shoppingList
-                        .filter(purchase => !purchase.replacementFor)
-                        .map(purchase => purchase.whereBuy)
-                ),
-                ListNames.PURCHASED,
-                onAddReplacement,
-                onEditItem,
-                onDeleteItem,
-                onChangeListName,
-            );
+        clearArray(
+            shoppingList
+                .filter(purchase => !purchase.replacementFor)
+                .map(purchase => purchase.whereBuy)
+        ),
+        ListNames.PURCHASED,
+        onAddReplacement,
+        onEditItem,
+        onDeleteItem,
+        onChangeListName,
+    );
 
     const columnsPurchasedList = getColumns(
-                clearArray(
-                    purchasedList
-                        .filter(purchase => !purchase.replacementFor)
-                        .map(purchase => purchase.whereBuy)
-                ),
-                ListNames.SHOPPING,
-                onAddReplacement,
-                onEditItem,
-                onDeleteItem,
-                onChangeListName
-            );
+        clearArray(
+            purchasedList
+                .filter(purchase => !purchase.replacementFor)
+                .map(purchase => purchase.whereBuy)
+        ),
+        ListNames.SHOPPING,
+        onAddReplacement,
+        onEditItem,
+        onDeleteItem,
+        onChangeListName
+    );
 
     const getDataList = (purchases: IPurchaseItem[]): IShoppingTableRow[] => {
         const getChildrenList = (purchase: IPurchaseItem) => {
@@ -77,42 +77,44 @@ export const ShoppingTable = ({
     return (
         <Tabs type="card">
             <TabPane tab="Список покупок" key="1">
-                <Table
-                    columns={columnsShoppingList}
-                    dataSource={getDataList(shoppingList)}
-                    onChange={onChange}
-                    pagination={false}
-                    scroll={{x: 1000}}
-                    sticky
-                    summary={pageData => {
-                        let totalPrice = 0;
-                        pageData.forEach((purchase) => {
-                            totalPrice += getTotalPriceElement(purchase);
-                        });
+                {(shoppingList.length > 0) ?
+                    <Table
+                        columns={columnsShoppingList}
+                        dataSource={getDataList(shoppingList)}
+                        onChange={onChange}
+                        pagination={false}
+                        scroll={{x: 1000}}
+                        sticky
+                        summary={pageData => {
+                            let totalPrice = 0;
+                            pageData.forEach((purchase) => {
+                                totalPrice += getTotalPriceElement(purchase);
+                            });
 
-                        return (
-                            <>
-                                <Table.Summary.Row className={styles.tfoot_th}>
-                                    <Table.Summary.Cell className={styles.tfoot_td} index={1}
-                                                        colSpan={2}>Итого:</Table.Summary.Cell>
-                                    <Table.Summary.Cell className={styles.tfoot_td} index={2} colSpan={4}>
-                                        {totalPrice}р
-                                    </Table.Summary.Cell>
-                                </Table.Summary.Row>
-                            </>
-                        );
-                    }}
-                />
+                            return (
+                                <>
+                                    <Table.Summary.Row className={styles.tfoot_th}>
+                                        <Table.Summary.Cell className={styles.tfoot_td} index={1}
+                                                            colSpan={2}>Итого:</Table.Summary.Cell>
+                                        <Table.Summary.Cell className={styles.tfoot_td} index={2} colSpan={4}>
+                                            {totalPrice}р
+                                        </Table.Summary.Cell>
+                                    </Table.Summary.Row>
+                                </>
+                            );
+                        }}
+                    /> : <Empty description={'Список пуст'} />}
             </TabPane>
             <TabPane tab="Куплено" key="2">
-                <Table
-                    columns={columnsPurchasedList}
-                    dataSource={getDataList(purchasedList)}
-                    onChange={onChange}
-                    pagination={false}
-                    scroll={{x: 1000}}
-                    sticky
-                />
+                {(purchasedList.length > 0) ?
+                    <Table
+                        columns={columnsPurchasedList}
+                        dataSource={getDataList(purchasedList)}
+                        onChange={onChange}
+                        pagination={false}
+                        scroll={{x: 1000}}
+                        sticky
+                    /> : <Empty description={'Список пуст'} />}
             </TabPane>
         </Tabs>
     );
