@@ -1,6 +1,6 @@
 import {Form, FormInstance, Input, InputNumber, Modal, Select} from "antd";
 import React from "react";
-import AddingSelectContainer from "../../containers/AddingSelectContainer";
+import AddAndSaveSelectItemContainer from "../../containers/AddAndSaveSelectItemContainer";
 import {IFormValues, IModalFormProps, IModalFormState} from "../../interface";
 import {getPriceUnit, QuantityUnit, Unit} from "../../units";
 
@@ -30,7 +30,6 @@ class ModalForm extends React.Component<IModalFormProps, IModalFormState> {
 
     onOk = () => {
         this.form.current?.submit();
-        console.log(this.form.current);
     };
 
     onFinish = (values: IFormValues) => {
@@ -38,7 +37,6 @@ class ModalForm extends React.Component<IModalFormProps, IModalFormState> {
             ...values,
             replacementFor: this.props.replacementFor
         });
-        console.log(values);
         this.handleClose();
     };
 
@@ -56,8 +54,8 @@ class ModalForm extends React.Component<IModalFormProps, IModalFormState> {
     }
 
     getUnitOptions(units: Unit[]) {
-        let options: JSX.Element[] = [];
-        units.map(unit => {
+        let options: React.ReactNode[] = [];
+        units.forEach(unit => {
             options.push(<Option key={unit} value={unit}>{unit}</Option>)
         });
         return options;
@@ -116,7 +114,7 @@ class ModalForm extends React.Component<IModalFormProps, IModalFormState> {
                     </Form.Item>
 
                     <Form.Item label="Где купить" name={'whereBuy'}>
-                        <AddingSelectContainer
+                        <AddAndSaveSelectItemContainer
                             style={{width: '100%'}}
                             placeholder="Выберите место"
                             addButtonText={'Добавить место'}

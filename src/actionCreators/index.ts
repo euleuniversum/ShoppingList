@@ -2,17 +2,20 @@ import * as actionTypes from '../actionTypes';
 import {
     IAddPurchaseAction,
     IChangeModalState,
+    IChangeListName,
     IDeletePurchaseAction,
-    IEditPurchaseAction
+    IEditPurchaseAction,
+    IUpdateIdsInTableState
 } from "../actionTypes/interface";
-import uniqid from 'uniqid';
-import {IFormValues, ModalState} from "../interface";
+import {nanoid} from 'nanoid';
+import {IFormValues, ListNames, ModalState} from "../interface";
 
 export const addPurchaseAction = (formValues: IFormValues): IAddPurchaseAction => ({
     type: actionTypes.ADD_PURCHASE,
     payload: {
-        id: uniqid(),
+        id: nanoid(),
         isEdited: false,
+        listName: ListNames.SHOPPING,
         creationDate: new Date(),
         ...formValues
     },
@@ -37,5 +40,18 @@ export const changeModalState = (state: ModalState, purchaseId?: string, replace
         state,
         purchaseId,
         replacementFor
+    }
+});
+
+export const updateIdsInTableState = (ids: string[]): IUpdateIdsInTableState => ({
+    type: actionTypes.UPDATE_IDS_IN_TABLE_STATE,
+    payload: ids
+});
+
+export const changeListName = (ids: string[], listName: ListNames): IChangeListName => ({
+    type: actionTypes.CHANGE_LIST_NAME,
+    payload: {
+        ids,
+        listName
     }
 });

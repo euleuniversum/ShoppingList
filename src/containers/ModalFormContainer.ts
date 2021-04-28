@@ -23,7 +23,6 @@ const getModalProps = (modalStore: IModalStore, purchaseValues: IPurchaseItem | 
                 }
             }
         case ModalState.EDIT: {
-            console.log(purchaseValues)
             if (purchaseValues) {
                 return {
                     title: 'Редактировать элемент',
@@ -54,7 +53,7 @@ export default connect(
         const {state} = stateProps;
         const {dispatch} = dispatchProps;
         const {modal} = state;
-        const purchaseValues = state.purchases.find(purchase => purchase.isEdited);
+        const purchaseValues = Object.values(state.purchases.purchasesById).find(purchase => purchase.isEdited);
         return {
             ...getModalProps(modal, purchaseValues),
             onClose: () => dispatch(changeModalState(ModalState.HIDE)),

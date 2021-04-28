@@ -9,6 +9,7 @@ import {calcCenteredGrid} from '../../helpers/app';
 import {changeModalState} from "../../actionCreators";
 import ModalFormContainer from "../../containers/ModalFormContainer";
 import ShoppingTableContainer from '../../containers/ShoppingTableContainer';
+import DownloadsTableCSVContainer from '../../containers/DownloadsTableCSVContainer';
 import {store} from '../../store';
 import {ModalState} from "../../interface";
 
@@ -17,6 +18,10 @@ const {Header, Content} = Layout;
 const grid = {
     xxl: calcCenteredGrid(20),
     ...calcCenteredGrid(24),
+}
+
+const spanForHeaderRow = {
+    sm: {flex: "auto", offset: 1},
 }
 
 moment.locale('ru');
@@ -29,10 +34,13 @@ const App = () => {
     return (
         <Provider store={store}>
             <Layout className={styles.app}>
-                <Header>
+                <Header className={styles.header}>
                     <Row>
-                        <Col {...grid}>
-                            <Button type={'primary'} onClick={onCreate}>Добавить элемент</Button>
+                        <Col {...spanForHeaderRow}>
+                            <Button className={styles.btnAdd} type={'primary'} onClick={onCreate}>Добавить элемент</Button>
+                        </Col>
+                        <Col {...spanForHeaderRow}>
+                            <DownloadsTableCSVContainer/>
                         </Col>
                     </Row>
                 </Header>

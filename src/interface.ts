@@ -1,4 +1,3 @@
-import React from "react";
 import {SelectProps} from "antd";
 import {Unit} from "./units";
 
@@ -43,21 +42,33 @@ export interface IModalFormState {
     quantityUnit: Unit,
 }
 
+export enum ListNames {
+    SHOPPING = 'ShoppingList',
+    PURCHASED = 'PurchasedList',
+}
+
 export interface IPurchaseItem extends IFormValues {
     id: string,
     creationDate: Date,
     isEdited: boolean,
+    listName: ListNames,
 }
 
-export interface IPurchasesStore extends Array<IPurchaseItem> {
-
+export interface IPurchasesStore {
+    sortedPurchasesIds: string[],
+    purchasesById: {
+        [id: string]: IPurchaseItem
+    }
 }
 
 export interface IShoppingTableProps {
-    purchases: IPurchaseItem[],
+    shoppingList: IPurchaseItem[],
+    purchasedList: IPurchaseItem[],
     onAddReplacement: (id: string) => void,
     onEditItem: (id: string) => void,
     onDeleteItem: (id: string) => void,
+    onSortItem: (ids: string[]) => void,
+    onChangeListName: (ids: string[], listName: ListNames) => void,
 }
 
 export interface IShoppingTableRow extends IFormValues {
@@ -68,11 +79,15 @@ export interface IShoppingTableRow extends IFormValues {
 
 export interface IElementActionsProps {
     id: string,
+    childrenIds: string[],
+    toListName: ListNames,
     title: string,
+    showChangeListButton: boolean,
     showReplacementButton: boolean,
     onAddReplacement: (id: string) => void,
     onEdit: (id: string) => void,
-    onDelete: (id: string) => void
+    onDelete: (id: string) => void,
+    onChangeListName: (ids: string[], listName: ListNames) => void,
 }
 
 export interface IAddingSelectProps extends SelectProps<string> {
@@ -86,12 +101,6 @@ export interface IAddingSelectState {
     newItem: string,
 }
 
-export interface AddButtonProps {
-    menu: React.ReactElement,
-    text: string,
-    onClick: () => void
-}
-
 export interface IDateValueProps {
     date: Date
 }
@@ -103,4 +112,14 @@ export interface IPriceCellProps {
 export interface IUnitConformity {
     name: Unit,
     ratio: number,
+}
+
+export interface IDownloadCSVProps {
+    headers: {
+        label: string,
+        key: string
+    }[]
+    data: IPurchaseItem[],
+    text: string,
+    filename: string
 }
