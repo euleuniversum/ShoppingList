@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import {DownloadCSV} from "../components/DownloadCSV/DownloadCSV";
-import { IPurchaseItem, IRootStore} from "../interface";
+import {IPurchaseItem, IRootStore, ListNames} from "../interface";
 
 function getHeaders() {
     return [
@@ -23,8 +23,10 @@ function getData(sortedIds: string[], purchasesById: { [id: string]: IPurchaseIt
         if (purchase.replacementFor) {
             purchase.replacementFor = purchasesById[purchase.replacementFor]?.title;
         }
-        return data.push(purchase)
+        if (purchase.listName === ListNames.SHOPPING)
+            data.push(purchase)
     });
+
     return data;
 }
 

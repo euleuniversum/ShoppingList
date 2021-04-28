@@ -100,8 +100,6 @@ const changeListName = (state: IPurchasesStore, action: IChangeListName): IPurch
     const {ids, listName} = action.payload;
 
     ids.forEach((id) => {
-        if (sortedPurchasesIds.includes(id))
-            sortedPurchasesIds = [...state.sortedPurchasesIds.filter(item => item !== id)];
         purchasesById[id] = {
             ...purchasesById[id],
             listName
